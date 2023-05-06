@@ -10,6 +10,7 @@ import {
   CardBody,
   CardFooter,
 } from "../../components/Pages";
+import Select from "../../components/Select";
 
 //////////////
 const TestCard = function ({
@@ -92,6 +93,52 @@ const TestCard = function ({
           }
           return result;
         })}
+        {file == "users" ? (
+          enable ? (
+            <>
+              <Select
+                multiple={true}
+                name={"leaders"}
+                value={formVal}
+                setValue={setFormVal}
+                options={items
+                  .filter((fi) => fi?.type)
+                  .map((i) => {
+                    return { value: i.id, label: `${i.name}` };
+                  })}
+              />
+              <Select
+                multiple={false}
+                name={"type"}
+                value={formVal}
+                setValue={setFormVal}
+                options={[
+                  {
+                    value: "735eefc4-3990-40d7-a47d-958f50f2b725",
+                    label: "Liderar a otros",
+                  },
+                  {
+                    value: "09aebc68-65c9-44e8-8183-1d90fcd68905",
+                    label: "Lidera organizacional",
+                  },
+                ]}
+              />
+            </>
+          ) : (
+            <>
+              <div>
+                leaders:{" "}
+                {formVal?.leaders &&
+                  formVal.leaders.map((l) => {
+                    return l + ", ";
+                  })}
+              </div>
+              <div>Type: {formVal?.type && formVal.type}</div>
+            </>
+          )
+        ) : (
+          ""
+        )}
         <CardFooter>
           {enable ? (
             <PrimaryButton onClick={handleSave}>Guardar</PrimaryButton>

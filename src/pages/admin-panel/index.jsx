@@ -39,7 +39,7 @@ const Page = function ({
   }
 
   if (!aviableForms[file]) {
-    return <>Selecciona un catálogo</>;
+    return <>Selecciona un catálogo válido</>;
   }
   let defaultValues = aviableForms[file].reduce((acc, obj) => {
     return { ...acc, ...obj };

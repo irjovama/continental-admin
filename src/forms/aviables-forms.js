@@ -1,5 +1,6 @@
 const aviableForms = {
   user_tests:[{name: ""}],
+  users:[{name: ""},{middlename: ""},{lastname: ""}, {email: ""} ],
   tests: [{ title: "" }, { description: "" }],
   user_types: [{ name: "" }],
   categories: [{ name: "" }, { weight: 0 }],

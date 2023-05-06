@@ -47,6 +47,7 @@ const SideBar = function ({ params, setParams }) {
   const [questions, setQuestions] = useState([]);
   const [results, setResults] = useState([]);
   const [navigation, setNavigation] = useState("");
+  const [userTests, setUserTests] = useState("");
   const [users, setUsers] = useState("");
   const urlParams = useParams();
   useEffect(() => {
@@ -59,6 +60,7 @@ const SideBar = function ({ params, setParams }) {
       filterBy: `id=${urlParams.tests_id}`,
     }).then((t) => setTests(t.data));
     show("user_types", filter).then((t) => setUserTypes(t.data));
+    show("user_tests", filter).then((t) => setUserTests(t.data));
     show("users", filter).then((t) => setUsers(t.data));
     show("categories", filter).then((t) => setCategories(t.data));
     show("sub_categories", filter).then((t) => setSubCategories(t.data));
@@ -72,7 +74,6 @@ const SideBar = function ({ params, setParams }) {
         {tests.map((t) => {
           return (
             <div key={t.title}>
-              {console.log(navigation)}
               <Li border={true}>
                 <h2
                   style={
@@ -134,6 +135,26 @@ const SideBar = function ({ params, setParams }) {
                       parent: { tests_id: t.id },
                       items: users,
                       setItems: setUsers,
+                    });
+                  }}
+                >
+                  Alta de usuarios
+                </Link>
+                <Link
+                  style={
+                    navigation == t.id + "ut"
+                      ? { background: colors.selected }
+                      : {}
+                  }
+                  onClick={() => {
+                    setNavigation(t.id + "ut");
+                    setParams({
+                      file: "user_tests",
+                      title: "Invitar usuarios",
+                      tests_id: t.id,
+                      parent: { tests_id: t.id },
+                      items: userTests,
+                      setItems: setUserTests,
                     });
                   }}
                 >
@@ -311,26 +332,6 @@ const SideBar = function ({ params, setParams }) {
                                                       })`}
                                                     </Link>
                                                   </Li>
-                                                  <Ul>
-                                                    <Ul>
-                                                      {questions
-                                                        .filter((q) => {
-                                                          return (
-                                                            q.sub_categories_id ==
-                                                            fsc.id
-                                                          );
-                                                        })
-                                                        .map((fq) => {
-                                                          return (
-                                                            <div key={fq.title}>
-                                                              <Li>
-                                                                {fq.title}
-                                                              </Li>
-                                                            </div>
-                                                          );
-                                                        })}
-                                                    </Ul>
-                                                  </Ul>
                                                 </div>
                                               );
                                             })}
