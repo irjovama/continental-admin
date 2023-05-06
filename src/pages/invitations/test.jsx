@@ -54,7 +54,7 @@ const Paragraph = styled.div`
 const Table = styled.table`
   width: 500px;
 `;
-const InfoInvitations = function () {
+const TestInvitation = function () {
   return (
     <>
       <MiniLogo />
@@ -64,4 +64,4 @@ const InfoInvitations = function () {
     </>
   );
 };
-export default InfoInvitations;
+export default TestInvitation;
