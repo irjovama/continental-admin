@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Logo } from "../../img/logo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { find } from "../../fetch";
 
 const Container = styled.div`
   display: flex;
@@ -40,11 +42,20 @@ const Button = styled.button`
   line-height: 120%;
 `;
 const HomeInvitations = function () {
+  const urlParams = useParams();
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    find(`user_tests/${urlParams.token}`).then((r) => {
+      find(`tests/${r.tests_id}`).then((t) => {
+        setTitle(t.title);
+      });
+    });
+  }, []);
   return (
     <Container>
       <Center>
         <Logo />
-        <Title>Encuesta de medicion de liderazgo</Title>
+        <Title>{title}</Title>
 
         <Link to="info">
           {" "}

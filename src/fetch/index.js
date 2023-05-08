@@ -21,6 +21,16 @@ const send = async function(to, token, test_name){
     return err
   }
 }
+const find = async function(file){
+  const params = {limit: 10, page: 1};
+
+  const options = {
+    method: 'GET',
+    url: baseURI + '/' + file,
+    params: params
+  };
+  return (await axios.request(options)).data
+}
 const show = async function(file, {...props}){
 
   const params = {limit: props.limit || 10, page:  props.page || 1};
@@ -61,4 +71,4 @@ const destroy = async function(id, file){
   
   return (await axios.request(options)).data
 }
-export {show, update, create, destroy, send}
+export {show, update, create, destroy, send, find}

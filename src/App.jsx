@@ -17,7 +17,7 @@ function App() {
           element={<InfoInvitations />}
         ></Route>
         <Route
-          path="invitations/:token/test"
+          path="invitations/:token/info/test"
           element={<TestInvitation />}
         ></Route>
       </Routes>

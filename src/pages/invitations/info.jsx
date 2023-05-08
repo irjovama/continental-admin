@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { MiniLogo } from "../../img/logo";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { find } from "../../fetch";
 
 const Container = styled.div`
   display: flex;
@@ -55,6 +57,21 @@ const Table = styled.table`
   width: 500px;
 `;
 const InfoInvitations = function () {
+  const urlParams = useParams();
+  const [user, setUser] = useState("");
+  const [leader, setLeader] = useState("");
+  useEffect(() => {
+    find(`user_tests/${urlParams.token}`).then((r) => {
+      find(`users/${r.users_id}`).then((u) => {
+        setUser(`${u.name} ${u.middlename} ${u.lastname}`);
+        sessionStorage.setItem("users_id", u.id);
+      });
+      find(`users/${r.leaders_id}`).then((u) => {
+        setLeader(u?.name ? `${u.name} ${u.middlename} ${u.lastname}` : "");
+        sessionStorage.setItem("leaders_id", u.id);
+      });
+    });
+  }, []);
   return (
     <>
       <MiniLogo />
@@ -79,10 +96,17 @@ const InfoInvitations = function () {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Irving Jones Valdes Maciel</td>
-                <td>Irving Jones Valdes Maciel</td>
-              </tr>
+              {leader != "" ? (
+                <tr>
+                  <td>{user}</td>
+                  <td>{leader}</td>
+                </tr>
+              ) : (
+                <tr>
+                  <td>{user}</td>
+                  <td>Auto Evaluacion</td>
+                </tr>
+              )}
             </tbody>
           </Table>
           <Paragraph>
