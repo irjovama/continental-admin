@@ -1,7 +1,7 @@
 import axios from "axios";
 const baseURI = 'http://localhost:3000/db';
 const baseSendURI = 'http://localhost:3000/mail';
-const invitationURI = 'http://localhost:5174/invitations';
+const invitationURI = 'http://localhost:5173/invitations';
 const send = async function(to, token, test_name){
 
   const options = {
