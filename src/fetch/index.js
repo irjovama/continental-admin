@@ -60,7 +60,6 @@ const create = async function(file, data){
     headers: {'Content-Type': 'application/json'},
     data
   };
-  console.log("creando", options)
   return (await axios.request(options)).data
 }
 const destroy = async function(id, file){

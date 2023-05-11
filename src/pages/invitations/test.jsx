@@ -191,8 +191,10 @@ const TestInvitation = function () {
       const user = sessionStorage.getItem("users_id");
       const leader = sessionStorage.getItem("leaders_id");
       const result = { ...r, ...{ users_id: user, leaders_id: leader } };
-      const s = await create("results", result);
+      const s = await create("user_questions", result);
     }
+    
+    await update(urlParams.token, "user_tests", {status: 1})
   }
   return (
     <>

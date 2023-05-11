@@ -19,10 +19,15 @@ const Select = function ({ ...props }) {
         multiple={props.multiple}
         value={props.value[props.name]}
         onInput={(e) => {
-          const selectedValues = Array.from(
+          
+          const selectedValues = 
+          (props.multiple) 
+          ? Array.from(
             e.target.selectedOptions,
             (option) => option.value
-          );
+          ) 
+          : e.target.value;
+          console.log(selectedValues);
           props.setValue({ ...props.value, [props.name]: selectedValues });
         }}
       >
