@@ -9,6 +9,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 80vh;
+  max-width: 360px;
+  margin: auto;
 `;
 const Center = styled.div`
   display: flex;
@@ -16,8 +18,6 @@ const Center = styled.div`
   align-items: center;
 `;
 const Title = styled.div`
-  font-family: "Poppins";
-  font-style: normal;
   font-weight: 700;
   font-size: 48px;
   line-height: 120%;
@@ -26,17 +26,16 @@ const Title = styled.div`
   text-align: center;
 
   color: #7a00c6;
+  margin-bottom: 48px;
 `;
 const Button = styled.button`
-  width: 124px;
-  height: 50px;
-
   color: white;
   background: #7a00c6;
+  border: none;
   border-radius: 8px;
+  padding: 14px 24px;
+  cursor: pointer;
 
-  font-family: "Poppins";
-  font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 120%;
@@ -44,13 +43,15 @@ const Button = styled.button`
 const HomeInvitations = function () {
   const urlParams = useParams();
   const [title, setTitle] = useState("");
+
   useEffect(() => {
     find(`user_tests/${urlParams.token}`).then((r) => {
       find(`tests/${r.tests_id}`).then((t) => {
         setTitle(t.title);
       });
     });
-  }, []);
+  }, [urlParams.token]);
+
   return (
     <Container>
       <Center>
@@ -58,7 +59,6 @@ const HomeInvitations = function () {
         <Title>{title}</Title>
 
         <Link to="info">
-          {" "}
           <Button>Comenzar</Button>
         </Link>
       </Center>

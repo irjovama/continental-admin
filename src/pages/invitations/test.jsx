@@ -2,66 +2,73 @@ import styled from "styled-components";
 import { MiniLogo } from "../../img/logo";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { create, find, show } from "../../fetch";
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
 `;
-const Center = styled.div`
+
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 2rem;
+  padding-bottom: 72px;
+  & > :nth-child(2n) {
+    background-color: rgb(250, 250, 250);
+  }
 `;
 
 const Button = styled.button`
-  width: 124px;
-  height: 50px;
-
   color: white;
   background: #7a00c6;
+  border: none;
   border-radius: 8px;
+  padding: 14px 24px;
+  cursor: pointer;
 
-  font-family: "Poppins";
-  font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 120%;
+
+  &:disabled {
+    opacity: 0.6;
+  }
 `;
 
-const Table = styled.table`
-  width: 500px;
-`;
 const Progress = styled.progress`
   width: 500px;
-  height: 8px;
+  height: 16px;
+  accent-color: #7a00c6;
 `;
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
+
+const Header = styled.header`
+  padding: 12px 16px;
 `;
-const Header2 = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8rem;
+
+const StickyHeader = styled.div`
+  position: sticky;
+  top: 0;
+  padding: 8px 32px;
+  background-color: white;
+  margin-bottom: 32px;
 `;
+
 const Circle = styled.div`
   cursor: pointer;
-  border: solid 1px;
-  padding: 5px;
-  width: 20px;
+  border: 1px solid #7a00c6;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 36px;
+  font-weight: 500;
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  border-radius: 100px;
   background-color: ${(props) => (props.selected ? "#7A00C6" : "white")};
-  color: ${(props) => (props.selected ? "white" : "black")};
+  color: ${(props) => (props.selected ? "white" : "inherit")};
 `;
 const Invisible = styled.input`
   display: none;
@@ -70,19 +77,43 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
-  border-bottom: solid 1px;
+  gap: 8px;
+  /* border-bottom: solid 1px; */
 `;
 const Sides = styled.div`
-  width: 200px;
+  min-width: 100px;
+  font-size: 14px;
+  text-align: center;
+  flex-basis: 0;
+  flex-grow: 1;
+`;
+const ProressWrapper = styled.div`
+  padding: 12px 16px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LevelHints = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Prompt = styled.p`
+  font-weight: 500;
+  font-size: 18px;
+  margin-bottom: 0.5rem;
 `;
 
 const Question = function ({ ...props }) {
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <>
-      {props.question.title}
+    <div style={{ padding: "0.25rem", width: "100%" }}>
+      <Prompt>
+        {props.index + 1}. {props.question.title}:
+      </Prompt>
       <ListContainer>
         <Sides>{props.question.lower_option}</Sides>
         {items.map((i) => {
@@ -140,11 +171,11 @@ const Question = function ({ ...props }) {
         })}
         <Sides>{props.question.upper_option}</Sides>
       </ListContainer>
-    </>
+    </div>
   );
 };
 
-async function handleQ(newQ, urlParams) {
+async function handleQ(urlParams, newQ = []) {
   const r = await find(`user_tests/${urlParams.token}`);
   const u = await find(`users/${r.leaders_id}`);
   const type = u.type[0];
@@ -173,18 +204,20 @@ async function handleQ(newQ, urlParams) {
 
   return newQ;
 }
+
 const TestInvitation = function () {
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [success, setSuccess] = useState(false);
   const urlParams = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    handleQ(questions, urlParams).then((r) => {
+    handleQ(urlParams).then((r) => {
       setQuestions(r);
     });
-  }, [questions]);
+  }, [urlParams]);
 
   async function handleSave() {
     for (let r of results) {
@@ -193,69 +226,55 @@ const TestInvitation = function () {
       const result = { ...r, ...{ users_id: user, leaders_id: leader } };
       const s = await create("user_questions", result);
     }
-    
-    await update(urlParams.token, "user_tests", {status: 1})
+
+    await update(urlParams.token, "user_tests", { status: 1 });
+    navigate("/thanks", { replace: true });
   }
   return (
-    <>
-      {" "}
-      <MiniLogo />
-      <Container>
-        <Center
-          style={{
-            position: "absolute",
-            top: "120px",
-            width: "800px",
-          }}
-        >
-          {questions.length > 0 ? (
-            questions.map((q) => {
-              return (
-                <Question
-                  key={q.id}
-                  question={q}
-                  results={results}
-                  setResults={setResults}
-                  urlParams={urlParams}
-                  progress={progress}
-                  setProgress={setProgress}
-                />
-              );
-            })
-          ) : (
-            <Button onClick={() => setProgress(0.01)}>Comenzar</Button>
-          )}
-        </Center>
-      </Container>
-      <Center>
-        <div
-          style={{
-            position: "fixed",
-            background: "white",
-            top: "0",
-            padding: " 0 200px ",
-          }}
-        >
-          <Header>
-            <Progress
-              value={(results.length / questions.length) * 100}
-              max="100"
-            />
-            <Button
-              onClick={() => handleSave(questions)}
-              disabled={results.length / questions.length >= 1 ? false : true}
-            >
-              Guardar
-            </Button>
-          </Header>
-          <Header2>
-            <span>(1) opcion mínima</span>
-            <span>(5) Comportamiento intermedio</span>
-            <span>(10) Opcion máxima</span>
-          </Header2>
-        </div>
-      </Center>
-    </>
+    <Container>
+      <Header>
+        <MiniLogo />
+      </Header>
+
+      <StickyHeader>
+        <ProressWrapper>
+          <Progress
+            value={(results.length / questions.length) * 100}
+            max="100"
+          />
+          <Button
+            onClick={() => handleSave(questions)}
+            disabled={results.length / questions.length >= 1 ? false : true}
+          >
+            Guardar
+          </Button>
+        </ProressWrapper>
+
+        <LevelHints>
+          <span>(1) opcion mínima</span>
+          <span>(5) Comportamiento intermedio</span>
+          <span>(10) Opcion máxima</span>
+        </LevelHints>
+      </StickyHeader>
+
+      <Wrapper>
+        {questions.length > 0 &&
+          questions.map((q, index) => {
+            return (
+              <Question
+                key={q.id}
+                index={index}
+                question={q}
+                results={results}
+                setResults={setResults}
+                urlParams={urlParams}
+                progress={progress}
+                setProgress={setProgress}
+              />
+            );
+          })}
+      </Wrapper>
+    </Container>
   );
 };
 export default TestInvitation;

@@ -24,6 +24,7 @@ const UserTests = function ({
 }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     show("users", {
       limit: 1000000,
@@ -39,6 +40,7 @@ const UserTests = function ({
     });
     await send(user.email, result.id, tests_id);
   }
+
   async function sendOne(u) {
     //si tiene lideres
     if (u?.leaders) {
