@@ -77,6 +77,16 @@ const UserTests = function ({
     setLoading(false);
     alert("Correos enviados");
   }
+
+  async function sendReport(u) {
+    setLoading(true);
+
+    const r = await fetch("http://localhost:3000/pdf/tests/73e647e1-cfa3-4ade-9985-c44e4527a0d4/users/73f7e170-b1ce-4bcb-be09-491df9eef50e")
+    const data = await r.json();
+    setLoading(false);
+    alert(data.result)
+  }
+
   async function sendAll() {
     setLoading(true);
     for (const u of users) {
@@ -109,7 +119,18 @@ const UserTests = function ({
                 sendForUser(u);
               }}
             >
-              Enviar Invitaciones de{" "}
+              Enviar Invitaciones {" "}
+            </PrimaryButton>
+          )}{" "}
+          {loading ? (
+            <>Sending...</>
+          ) : (
+            <PrimaryButton
+              onClick={() => {
+                sendReport(u);
+              }}
+            >
+              Enviar Reporte {" "}
             </PrimaryButton>
           )}{" "}
           <span>
