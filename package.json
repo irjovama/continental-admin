@@ -11,9 +11,8 @@
     "start": "vite",
     "lint": "2",
     "preview": "vite preview",
-    "build": "tsc && vite build",
-    "postinstall": "npm run build",
-    "serve-heroku": "vite --host 0.0.0.0 --port $PORT preview"
+    "build": " vite build",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "vite": "^4.3.2",
