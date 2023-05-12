@@ -1,6 +1,8 @@
 import axios from "axios";
-const URI = "http://localhost:3000";
-const localHost = "http://localhost:5173";
+import * as dotenv from 'dotenv';
+
+const URI = "https://thawing-oasis-42405.herokuapp.com";
+const localHost = "https://fathomless-sands-37504.herokuapp.com" ;
 const baseURI = URI + "/db";
 const baseSendURI = URI + "/mail";
 const basePDFURI = URI + "/pdf";
