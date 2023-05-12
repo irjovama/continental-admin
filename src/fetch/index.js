@@ -2,7 +2,7 @@ import axios from "axios";
 import * as dotenv from 'dotenv';
 
 const URI = "https://thawing-oasis-42405.herokuapp.com";
-const localHost = "https://fathomless-sands-37504.herokuapp.com" ;
+const localHost = "https://chimerical-smakager-557ef5.netlify.app" ;
 const baseURI = URI + "/db";
 const baseSendURI = URI + "/mail";
 const basePDFURI = URI + "/pdf";
