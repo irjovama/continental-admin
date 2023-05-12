@@ -1,17 +1,32 @@
 import axios from "axios";
-const baseURI = "http://localhost:3000/db";
-const baseSendURI = "http://localhost:3000/mail";
-const invitationURI = "http://localhost:5173/invitations";
+const URI = "http://localhost:3000";
+const localHost = "http://localhost:5173";
+const baseURI = URI + "/db";
+const baseSendURI = URI + "/mail";
+const basePDFURI = URI + "/pdf";
+const invitationURI = localHost + "/invitations";
 
-const send = async function (to, token, test_name) {
+const sendPDF = async function (test_id, u){
+  const options = {
+    method: 'GET',
+    url: basePDFURI + '/tests/' + test_id + '/users/' + u.id
+  };
+  try {
+    return (await axios.request(options)).data;
+  } catch (err) {
+    return err;
+  }
+}
+
+const send = async function (to, test_title, object) {
   const options = {
     method: "POST",
     url: baseSendURI,
     headers: { "Content-Type": "application/json" },
     data: {
       to: to,
-      subject: `invitación a ${test_name}`,
-      text: `Ingresa al siguiente link para realizar la encuesta ${invitationURI}/${token}`,
+      subject: `invitación a ${test_title}`,
+      text: object.map(o=> `Ingresa al siguiente link para realizar la encuesta ${invitationURI}/${o.token} y evaluar a ${o.leader}`).join("\n"),
     },
   };
 
@@ -21,6 +36,7 @@ const send = async function (to, token, test_name) {
     return err;
   }
 };
+
 const find = async function (file) {
   const params = { limit: 10, page: 1 };
 
@@ -31,6 +47,7 @@ const find = async function (file) {
   };
   return (await axios.request(options)).data;
 };
+
 const show = async function (file, { ...props }) {
   const params = { limit: props.limit || 10, page: props.page || 1 };
   if (props.filterBy) {
@@ -43,6 +60,7 @@ const show = async function (file, { ...props }) {
   };
   return (await axios.request(options)).data;
 };
+
 const update = async function (id, file, data) {
   const options = {
     method: "PATCH",
@@ -52,6 +70,7 @@ const update = async function (id, file, data) {
   };
   return (await axios.request(options)).data;
 };
+
 const create = async function (file, data) {
   const options = {
     method: "POST",
@@ -61,6 +80,7 @@ const create = async function (file, data) {
   };
   return (await axios.request(options)).data;
 };
+
 const destroy = async function (id, file) {
   const options = {
     method: "DELETE",
@@ -69,4 +89,5 @@ const destroy = async function (id, file) {
 
   return (await axios.request(options)).data;
 };
-export { show, update, create, destroy, send, find };
+
+export { show, update, create, destroy, send, find, sendPDF };

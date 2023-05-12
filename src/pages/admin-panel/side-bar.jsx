@@ -39,7 +39,7 @@ const Container = styled.div`
   height: 600px;
 `;
 const Link = styled.a``;
-const SideBar = function ({ params, setParams }) {
+const SideBar = function ({  setParams, params }) {
   const [tests, setTests] = useState([]);
   const [userTypes, setUserTypes] = useState([]);
   const [categories, setCategories] = useState([]);

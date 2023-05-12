@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PrimaryButton from "../../components/primary-button";
 import Input from "../../components/input";
 import { create, destroy, show, update } from "../../fetch";
@@ -28,7 +28,8 @@ const TestCard = function ({
   const [enable, setEnable] = useState(enableEdit);
   const [formVal, setFormVal] = useState(defaultValues);
   const [visible, setVisible] = useState(true);
-
+  const [userTypes, setUserTypes] = useState([]);
+  
   const message =
     "¿Realmente deseas eliminar " +
     file +
@@ -73,6 +74,15 @@ const TestCard = function ({
         .catch(console.error);
     }
   }
+  async function handleTypes(){
+    const result =  await show("user_types", { limit: 1000, filterBy: `tests_id=${tests_id}`});
+    return result.data.map((r)=>{return {value: r.id, label: r.name}})
+  }
+  useEffect(()=>{
+    handleTypes().then(r=>{
+      setUserTypes(r)
+    })
+  },[])
   return (
     <CardContainer style={{ display: visible ? "block" : "none" }}>
       <CardBody>
@@ -112,16 +122,7 @@ const TestCard = function ({
                 name={"type"}
                 value={formVal}
                 setValue={setFormVal}
-                options={[
-                  {
-                    value: "735eefc4-3990-40d7-a47d-958f50f2b725",
-                    label: "Liderar a otros",
-                  },
-                  {
-                    value: "09aebc68-65c9-44e8-8183-1d90fcd68905",
-                    label: "Lidera organizacional",
-                  },
-                ]}
+                options={userTypes}
               />
             </>
           ) : (

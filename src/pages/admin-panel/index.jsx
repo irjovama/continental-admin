@@ -52,6 +52,7 @@ const Page = function ({
           <>
             <CardTitle>Nuevo elemento</CardTitle>
             <TestCard
+      
               enableEdit={true}
               setItems={setItems}
               formEnable={setEnable}
@@ -76,18 +77,19 @@ const Page = function ({
                     return true;
                   }
                   const key = Object.keys(parent)[0];
-                  console.log(key);
                   return i[key] == parent[key];
                 })
                 .map((t) => {
                   return (
                     <TestCard
+         
                       parent={parent}
                       key={t.id}
                       enableEdit={false}
                       setItems={setItems}
                       file={file}
                       items={items}
+                      tests_id={tests_id}
                       aviableForm={aviableForms[file]}
                       defaultValues={t}
                       id={t.id}
@@ -111,8 +113,8 @@ const AdminPanel = function () {
   const [params, setParams] = useState({});
   return (
     <HomeContainer>
-      <SideBar params={params} setParams={setParams} />
-      <Page {...params} />
+      <SideBar params={params} setParams={setParams}  />
+      <Page {...params}  />
     </HomeContainer>
   );
 };

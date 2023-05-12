@@ -18,8 +18,7 @@ const Select = function ({ ...props }) {
       <StyledInput
         multiple={props.multiple}
         value={props.value[props.name]}
-        onInput={(e) => {
-          
+        onChange={(e) => {
           const selectedValues = 
           (props.multiple) 
           ? Array.from(
@@ -27,7 +26,6 @@ const Select = function ({ ...props }) {
             (option) => option.value
           ) 
           : e.target.value;
-          console.log(selectedValues);
           props.setValue({ ...props.value, [props.name]: selectedValues });
         }}
       >

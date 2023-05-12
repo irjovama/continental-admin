@@ -3,7 +3,7 @@ import { MiniLogo } from "../../img/logo";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { create, find, show } from "../../fetch";
+import { create, find, show, update } from "../../fetch";
 
 const Container = styled.div`
   max-width: 1024px;
@@ -98,6 +98,10 @@ const ProressWrapper = styled.div`
 const LevelHints = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  & span{
+    width: 200px
+  }
 `;
 
 const Prompt = styled.p`
@@ -107,23 +111,50 @@ const Prompt = styled.p`
 `;
 
 const Question = function ({ ...props }) {
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
+  const randSort = props.randSort;
+  const arrItems = [
+    [
+      { label: 1, value: 1 },
+      { label: 2, value: 2 },
+      { label: 3, value: 3 },
+      { label: 4, value: 4 },
+      { label: 5, value: 5 },
+      { label: 6, value: 6 },
+      { label: 7, value: 7 },
+      { label: 8, value: 8 },
+      { label: 9, value: 9 },
+      { label: 10, value: 10 },
+    ],
+    [
+      { label: 1, value: 10 },
+      { label: 2, value: 9 },
+      { label: 3, value: 8 },
+      { label: 4, value: 7 },
+      { label: 5, value: 6 },
+      { label: 6, value: 5 },
+      { label: 7, value: 4 },
+      { label: 8, value: 3 },
+      { label: 9, value: 2 },
+      { label: 10, value: 1 },
+    ]
+  ]
+  const items = arrItems[randSort];
   return (
     <div style={{ padding: "0.25rem", width: "100%" }}>
       <Prompt>
         {props.index + 1}. {props.question.title}:
       </Prompt>
       <ListContainer>
-        <Sides>{props.question.lower_option}</Sides>
+        <Sides>{randSort == 0 ? props.question.lower_option : props.question.upper_option}</Sides>
         {items.map((i) => {
           return (
-            <label key={i}>
+            <label key={i.value}>
               <Invisible
                 type="radio"
                 name={props.question.id}
-                value={i}
+                value={i.value}
                 onChange={(e) => {
+                  
                   const val = props.results.find(
                     (r) => r.question_id == e.target.name
                   );
@@ -160,16 +191,16 @@ const Question = function ({ ...props }) {
                 selected={
                   props.results.find((r) => {
                     return r.question_id == props.question.id;
-                  })?.value == i
+                  })?.value == i.value
                 }
-                value={i}
+                value={i.value}
               >
-                {i}
+                {i.label}
               </Circle>
             </label>
           );
         })}
-        <Sides>{props.question.upper_option}</Sides>
+        <Sides>{randSort==0 ? props.question.upper_option : props.question.lower_option}</Sides>
       </ListContainer>
     </div>
   );
@@ -178,7 +209,7 @@ const Question = function ({ ...props }) {
 async function handleQ(urlParams, newQ = []) {
   const r = await find(`user_tests/${urlParams.token}`);
   const u = await find(`users/${r.leaders_id}`);
-  const type = u.type[0];
+  const type = u.type;
   const t = await show(`categories`, {
     limit: 100000,
     filterBy: `user_types_id=${type}`,
@@ -196,12 +227,11 @@ async function handleQ(urlParams, newQ = []) {
       });
       qs.data.forEach((q) => {
         if (!newQ.find((nq) => nq.id == q.id)) {
-          newQ.push({ ...q, ...{ users_type: type, categories_id: c.id } });
+          newQ.push({ ...q, ...{ users_type: type, categories_id: c.id, randSort: Math.floor(Math.random() * 2 ) } });
         }
       });
     }
   }
-
   return newQ;
 }
 
@@ -209,16 +239,23 @@ const TestInvitation = function () {
   const [progress, setProgress] = useState(0);
   const [results, setResults] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [success, setSuccess] = useState(false);
   const urlParams = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
+    handleLoad(urlParams).then((r) => {
+      if(r){
+        navigate("/thanks", { replace: true });
+      }
+    })
     handleQ(urlParams).then((r) => {
       setQuestions(r);
     });
   }, [urlParams]);
-
+  async function handleLoad(urlParams) {
+    const ut = await find("user_tests/"+urlParams.token);
+    return ut.status == 1 ? true : false;
+  }
   async function handleSave() {
     for (let r of results) {
       const user = sessionStorage.getItem("users_id");
@@ -251,9 +288,9 @@ const TestInvitation = function () {
         </ProressWrapper>
 
         <LevelHints>
-          <span>(1) opcion mínima</span>
-          <span>(5) Comportamiento intermedio</span>
-          <span>(10) Opcion máxima</span>
+          <span>(1) Comportamiento muy arraigado en el lider</span>
+          <span>(5) El lider tiene de ambos comportamientos y varia dependiendo la situaciòn</span>
+          <span>(10) Comportamiento muy arraigado en el lider</span>
         </LevelHints>
       </StickyHeader>
 
@@ -265,6 +302,7 @@ const TestInvitation = function () {
                 key={q.id}
                 index={index}
                 question={q}
+                randSort={q.randSort}
                 results={results}
                 setResults={setResults}
                 urlParams={urlParams}

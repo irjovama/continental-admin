@@ -4,3 +4,7 @@ body {
   font-family: "Poppins", sans-serif;
   color: #1c1c1a;
 }
+
+::-webkit-scrollbar {
+  width: 1px;
+}
