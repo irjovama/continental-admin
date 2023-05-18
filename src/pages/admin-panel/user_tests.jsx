@@ -11,16 +11,8 @@ const Card = styled.div`
   border-bottom: solid;
 `;
 const UserTests = function ({
-  enableEdit,
-  setItems,
-  formEnable,
   items,
   tests_id,
-  file,
-  defaultValues,
-  aviableForm,
-  parent,
-  id,
 }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
