@@ -39,6 +39,7 @@ const Home = function () {
                         <Card>{test.title}</Card>
                     </Link>
                 )}
+                <Link to="" style={{textDecoration: "none"}}><Card>Nueva Encuesta</Card></Link>
             </Container>
         </>
     );

@@ -57,20 +57,20 @@ const AdvanceReport = function ({}){
             </Banner>
             
             <Container>
-                {users.filter(u=> u.type !="" ).map(u => 
-                    <Card key={u.id}>
-                        <CardHeader>{u.name} {u.middlename} {u.lastname}</CardHeader>
-                        {users.filter(u2 => u2.leaders.includes(u.id)).map(u3=> {
-                            const invitation = user_tests.find( ut => ut.users_id == u3.id && ut.leaders_id == u.id);
-                            return <CardItem 
-                                        key={u3.id}
-                                        style={invitation?.status && invitation.status == 1 ? {background: "green"} : {}}
-                                    >
-                                        {u3.name} {u3.middlename} {u3.lastname}
-                                    </CardItem>
-                        })}
-                    </Card>
-                )}
+                {users.filter(u=> u?.type && u.type !="" ).map(u => {
+                    return ( <Card key={u.id}>
+                                <CardHeader>{u.name} {u.middlename} {u.lastname}</CardHeader>
+                                {users.filter(u2 => u2?.leaders && u2.leaders.includes(u.id)).map(u3=> {
+                                    const invitation = user_tests.find( ut => ut.users_id == u3.id && ut.leaders_id == u.id);
+                                    return <CardItem 
+                                                key={u3.id}
+                                                style={invitation?.status && invitation.status == 1 ? {background: "green"} : {}}
+                                            >
+                                                {u3.name} {u3.middlename} {u3.lastname}
+                                            </CardItem>
+                                })}
+                            </Card>)
+                })}
             </Container>
         </div>
     )

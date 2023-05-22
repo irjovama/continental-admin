@@ -101,7 +101,7 @@ const SideBar = function ({  setParams, params }) {
         materno: user.lastname,
         correo: user.email,
         tipo: userType?.name  ? userType.name : "",
-        lideres: user.leaders.map(l=> {
+        lideres: user?.leaders && user.leaders.map(l=> {
           const leader = users.find(u => u.id === l);
           return leader?.name ?  [leader.name, leader.middlename ,leader.lastname].join(" ") : "";
         }).join(", ")

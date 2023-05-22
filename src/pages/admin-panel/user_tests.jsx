@@ -20,6 +20,7 @@ const UserTests = function ({
   useEffect(() => {
     show("users", {
       limit: 1000000,
+      filterBy: `tests_id=${tests_id}`
     }).then((t) => setUsers(t.data));
   }, []);
 
