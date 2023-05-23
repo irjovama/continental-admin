@@ -50,7 +50,7 @@ const HomeInvitations = function () {
         setTitle(t.title);
       });
     });
-  }, [urlParams.token]);
+  }, []);
 
   return (
     <Container>
