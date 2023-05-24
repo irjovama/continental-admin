@@ -35,7 +35,7 @@ const FigmaTest = function ({props}) {
             await create("user_questions", result[i]);
         }
         const f = await update(urlParams.token, "user_tests", {status: 1});
-        console.log(f)
+     
         navigate("/finish/"+urlParams.token);
         context.setIsLoading(false);
     }
@@ -80,11 +80,17 @@ const FigmaTest = function ({props}) {
                                                             key={i} 
                                                             onClick={() => {
                                                                 q.value = v;
+                                                                q.user_types = context.leader.type;
+                                                                q.categories_id = context.subCategories.find(sc => sc.id == q.sub_categories_id).categories_id;
+                                                                q.randSort = q.reverse ? 1 : 0;
+                                                                q.users_id = context.user.id;
+                                                                q.leaders_id = context.leader.id;
                                                                 if(index >= 0 ){
                                                                     newResult[index] = q;
                                                                 } else {
                                                                     newResult.push(q);
                                                                 }
+                                                                console.log(newResult);
                                                                 setResult(newResult);
                                                             }}
                                                             style={{

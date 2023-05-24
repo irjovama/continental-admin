@@ -17,7 +17,7 @@ const Card = styled.div`
     margin: 1rem;
 `;
 const CardHeader = styled.div`
-   background: #3181cd;
+   background: #7A00C6;
    color: white;    
    font-size: large;
    padding: 5px;
@@ -30,7 +30,7 @@ const Banner = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: black;
+    background-color: #7A00C6;
     color: white;
 `;
 const AdvanceReport = function ({}){
@@ -58,13 +58,14 @@ const AdvanceReport = function ({}){
             
             <Container>
                 {users.filter(u=> u?.type && u.type !="" ).map(u => {
+                    const selfInvitation = user_tests.find( ut => ut.users_id == u.id && ut.leaders_id == u.id);
                     return ( <Card key={u.id}>
-                                <CardHeader>{u.name} {u.middlename} {u.lastname}</CardHeader>
+                                <CardHeader> {u.name} {u.middlename} {u.lastname} {selfInvitation?.status && selfInvitation.status == 1 ? "Autoevaluacion Pendiente" : ""}</CardHeader>
                                 {users.filter(u2 => u2?.leaders && u2.leaders.includes(u.id)).map(u3=> {
                                     const invitation = user_tests.find( ut => ut.users_id == u3.id && ut.leaders_id == u.id);
                                     return <CardItem 
                                                 key={u3.id}
-                                                style={invitation?.status && invitation.status == 1 ? {background: "green"} : {}}
+                                                style={invitation?.status && invitation.status == 1 ? {background: "lightgreen"} : { }}
                                             >
                                                 {u3.name} {u3.middlename} {u3.lastname}
                                             </CardItem>

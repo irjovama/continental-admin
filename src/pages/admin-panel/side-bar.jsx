@@ -121,7 +121,7 @@ const SideBar = function ({  setParams, params }) {
             }
     }));
     XLSX.utils.book_append_sheet(workbook, worksheet2, 'Invitaciones');
-
+    
     // Hoja de cálculo 3
     const worksheet3 = XLSX.utils.json_to_sheet(userQuestions.map(uq=> {
       const userType = userTypes.find(c => c.id === uq.users_type);
@@ -135,11 +135,11 @@ const SideBar = function ({  setParams, params }) {
         "pregunta": uq.title,
         "opción min": uq.lower_option,
         "opcion max": uq.upper_option,
-        "sub Categoria": subCategory.name,
-        "tipo de lider": userType.name ,
-        "Categoria": Category.name,
-        "usuario": user.name,
-        "lider": leader.name,
+        "sub Categoria": subCategory?.name && subCategory.name,
+        "tipo de lider": userType?.name && userType.name  ,
+        "Categoria": Category?.name && Category.name,
+        "usuario": user?.name && user.name ,
+        "lider": leader?.name && leader.name,
       }
     }));
     XLSX.utils.book_append_sheet(workbook, worksheet3, 'Respuestas');

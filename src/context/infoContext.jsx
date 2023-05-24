@@ -14,6 +14,8 @@ const InfoProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [leader, setLeader] = useState({});
   const [questions, setQuestions] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
@@ -41,11 +43,14 @@ const InfoProvider = ({ children }) => {
     setIsLoading(true);
     const limit = 999999;
     const allQ = [];
+    const allSC = [];
     let shadow = false;
     const categories = await show("categories", {limit, filterBy: `user_types_id=${leader.type}` });
+    setCategories(categories);
     for(let i in categories.data){
       const subCategories = await show("sub_categories", {limit, filterBy: `categories_id=${categories.data[i].id}`});
       for(let j in subCategories.data){
+        allSC.push(subCategories.data[j]);
         const q = await show("questions", {limit, filterBy: `sub_categories_id=${subCategories.data[j].id}`});
         for(let k in q.data){
           const addQ = q.data[k];
@@ -56,6 +61,7 @@ const InfoProvider = ({ children }) => {
         }
       }
     }
+    setSubCategories(allSC);
     setQuestions(allQ);
     setIsLoading(false);
   }
@@ -82,7 +88,11 @@ const InfoProvider = ({ children }) => {
           leader, 
           setLeader,
           questions, 
-          setQuestions
+          setQuestions, 
+          categories, 
+          setCategories,
+          subCategories,
+          setSubCategories,
       }}>
         {children}
       </InfoContext.Provider>
