@@ -3,6 +3,7 @@ import { Answers, ArrowUp, Arrows, LogosReport, Loved, Persons, Point, Points, R
 import { Container, Header, HeaderCard, LeaderCard, P2Card, P2Info, P3Card, P3Field, P3Info, P3Wrapper, Section, Wrapper, WrapperGraph, WrapperHeaderCard } from "./components"
 import { getPDF } from "../../fetch";
 import { useParams } from "react-router";
+import Loader from "../../components/loading";
 
 const Report = function (){
     const urlParams = useParams();
@@ -173,7 +174,7 @@ const Report = function (){
 
             
             
-        </Wrapper>): (<>Loading</>)}
+        </Wrapper>): (<Loader />)}
         </>
 
         
