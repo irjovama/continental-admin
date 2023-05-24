@@ -16,7 +16,7 @@ const FigmaFinish = function ({props}) {
                 {` ${context.leader.name}  ${context.leader.middlename} ${context.leader.lastname} `} 
                 se ha realizado con éxito!
                 <span>Gracias por haber realizado la evaluación</span>
-                <PrimaryButton>Salir</PrimaryButton>
+                <PrimaryButton onClick={()=> window.close()}>Salir</PrimaryButton>
             </Title>
             
         </BlankContainer>

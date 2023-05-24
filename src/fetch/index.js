@@ -32,6 +32,7 @@ const sendPDF = async function (test_id, u){
 }
 
 const send = async function (to, test_title, object) {
+  const links = object.map(o=> `Ingresa al siguiente link para realizar la encuesta ${invitationURI}/${o.token} y evaluar a ${o.leader}`).join("\n");
   const options = {
     method: "POST",
     url: baseSendURI,
@@ -39,10 +40,9 @@ const send = async function (to, test_title, object) {
     data: {
       to: to,
       subject: `invitación a ${test_title}`,
-      text: object.map(o=> `Ingresa al siguiente link para realizar la encuesta ${invitationURI}/${o.token} y evaluar a ${o.leader}`).join("\n"),
+      text: links,
     },
   };
-
   try {
     return (await axios.request(options)).data;
   } catch (err) {
