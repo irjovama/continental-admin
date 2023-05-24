@@ -8,6 +8,17 @@ const baseSendURI = URI + "/mail";
 const basePDFURI = URI + "/pdf";
 const invitationURI = localHost + "/invitations";
 
+const getPDF = async function(test_id, user_id){
+  const options = {
+    method: 'GET',
+    url: basePDFURI + '/tests/' + test_id + '/users/' + user_id + '/type/1'
+  };
+  try {
+    return (await axios.request(options)).data;
+  } catch (err) {
+    return err;
+  }
+}
 const sendPDF = async function (test_id, u){
   const options = {
     method: 'GET',
@@ -92,4 +103,4 @@ const destroy = async function (id, file) {
   return (await axios.request(options)).data;
 };
 
-export { show, update, create, destroy, send, find, sendPDF };
+export { show, update, create, destroy, send, find, sendPDF, getPDF };
