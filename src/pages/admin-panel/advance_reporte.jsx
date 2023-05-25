@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { show } from "../../fetch";
+import { show, update } from "../../fetch";
 import styled from "styled-components";
 const Container = styled.div`
     display: flex;
@@ -54,7 +54,9 @@ const AdvanceReport = function ({}){
         <div>
             <Banner>
                <h1>Reporte de Avance </h1> 
-               <input type="search" placeholder="Buscar Lider" onInput={(e)=> setFilter(e.target.value)} value={filter} />
+               <input type="search" placeholder="Buscar Lider" onInput={(e)=> {
+                setTimeout(()=>setFilter(e.target.value), 1000)
+               }}  />
                <button onClick={handleCopy}>{copied}</button>
             </Banner>
             
@@ -68,13 +70,59 @@ const AdvanceReport = function ({}){
                     const selfInvitation = user_tests.find( ut => ut.users_id == u.id && ut.leaders_id == u.id);
                     return ( <Card key={u.id}>
                                 <CardHeader> {u.name} {u.middlename} {u.lastname} {selfInvitation?.status && selfInvitation.status == 1 ? "Autoevaluacion Pendiente" : ""}</CardHeader>
+                                {filter!="" ? 
+                                <>
+                                    Selecciona un usuario:
+                                    <select required onChange={(e)=>{
+                                        const confirmar = confirm("Realmente deseas agregar al usuario "+e.target.value);
+                                        if(confirmar){
+                                            const newUsers = Object.assign([],users);
+                                            const updated = newUsers.map( (user) => {
+                                                if(user.id == e.target.value){
+                                                    const nl = user.leaders.split(",");
+                                                    nl.push(u.id)
+                                                    user.leaders = nl.join(",")
+                                                    update(e.target.value, "users", {leaders: user.leaders});
+                                                    e.target.value == ""
+                                                    return user 
+                                                } else {
+                                                    return user;
+                                                }
+                                                
+                                            })
+                                            setUsers(updated)
+                                        }
+                                    }}>
+                                        <option></option>
+                                        {users.map((u) => <option value={u.id}>{u.name}</option>)}
+                                    </select> 
+                                </>
+                                
+                                : <></>}
                                 {users.filter(u2 => u2?.leaders && u2.leaders.includes(u.id)).map(u3=> {
                                     const invitation = user_tests.find( ut => ut.users_id == u3.id && ut.leaders_id == u.id);
+                                    
                                     return <CardItem 
                                                 key={u3.id}
                                                 style={invitation?.status && invitation.status == 1 ? {background: "lightgreen"} : { }}
                                             >
-                                                {u3.name} {u3.middlename} {u3.lastname}
+                                                {u3.name} {u3.middlename} {u3.lastname} 
+                                                {filter!="" ? <button
+                                                    onClick={()=> {
+                                                       const conf = confirm('Realmente quieres eliminar al usuario?');
+                                                       if(conf){
+                                                            const newUsers = Object.assign([],users);
+                                                            newUsers.map((user)=> {
+                                                                return user.id == u3.id ? {...user, ...user["leaders"]=u3.leaders.split(",").filter(r => r != u.id).join(",") }  : user
+                                                            }  )
+                                                            update(u3.id, "users", {leaders: u3.leaders.split(",").filter(r => r != u.id).join(",") })
+                                                            .then(()=>{
+                                                                console.log(newUsers)
+                                                                setUsers(newUsers);
+                                                            })
+                                                       }
+                                                    }}
+                                                >Eliminar</button> : <></>}
                                             </CardItem>
                                 })}
                             </Card>)

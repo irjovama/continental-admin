@@ -135,7 +135,7 @@ const UserTests = function ({
                 <li>Lideres:</li>
                 <ul>
                   {u.leaders &&
-                    u.leaders.map((l) => {
+                    u.leaders.split(",").map((l) => {
                       const leader = users.find((us) => us.id == l);
                       if (leader?.name) {
                         return (

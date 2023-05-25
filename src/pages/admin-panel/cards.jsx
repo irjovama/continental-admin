@@ -124,7 +124,7 @@ const TestCard = function ({
               <div>
                 leaders:{" "}
                 {formVal?.leaders &&
-                  formVal.leaders.map((l) => {
+                  formVal.leaders.split(",").map((l) => {
                     return l + ", ";
                   })}
               </div>
