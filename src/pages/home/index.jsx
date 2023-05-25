@@ -33,6 +33,7 @@ const Home = function () {
             <Container>
                 {tests.map(test => 
                     <Link 
+                        key={test.id} 
                         to={"admin-panel/"+test.id}
                         style={{textDecoration: "none"}}
                     >

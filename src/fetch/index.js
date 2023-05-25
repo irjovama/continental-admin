@@ -58,7 +58,13 @@ const find = async function (file) {
     url: baseURI + "/" + file,
     params: params,
   };
-  return (await axios.request(options)).data;
+  try {
+    return (await axios.request(options)).data;
+  } catch (error) {
+    console.error(error)
+    return error;
+  }
+  
 };
 
 const show = async function (file, { ...props }) {

@@ -120,6 +120,7 @@ const Page = function ({
                       return i >= limit[0] && i <= limit[1] 
                     })
                     .map((t) => {
+                      console.log("tid", t);
                       return (
                         <TestCard
                           userTypes={userTypes}

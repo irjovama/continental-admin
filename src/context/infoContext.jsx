@@ -46,7 +46,6 @@ const InfoProvider = ({ children }) => {
     const allSC = [];
     let shadow = false;
     const categories = await show("categories", {limit, filterBy: `user_types_id=${leader.type}` });
-    console.log(leader)
     setCategories(categories);
     for(let i in categories.data){
       const subCategories = await show("sub_categories", {limit, filterBy: `categories_id=${categories.data[i].id}`});

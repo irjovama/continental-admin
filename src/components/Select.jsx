@@ -14,11 +14,13 @@ const Title = styled.div`
 const Select = function ({ ...props }) {
   return (
     <Container>
+     
       <Title>{props.name}:</Title>
       <StyledInput
         multiple={props.multiple}
-        value={props.value[props.name]}
+        value={props.value?.[props.name] ? props.value[props.name].split(",") :""}
         onChange={(e) => {
+          
           const selectedValues = 
           (props.multiple) 
           ? Array.from(
@@ -26,7 +28,8 @@ const Select = function ({ ...props }) {
             (option) => option.value
           ) 
           : e.target.value;
-          props.setValue({ ...props.value, [props.name]: selectedValues });
+          console.log(selectedValues.join(","))
+          props.setValue({ ...props.value, [props.name]: selectedValues.join(",") });
         }}
       >
         <option value={""}>Seleccionar una opcion</option>

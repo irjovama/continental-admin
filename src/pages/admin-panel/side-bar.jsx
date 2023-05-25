@@ -101,7 +101,7 @@ const SideBar = function ({  setParams, params }) {
         materno: user.lastname,
         correo: user.email,
         tipo: userType?.name  ? userType.name : "",
-        lideres: user?.leaders && user.leaders.map(l=> {
+        lideres: user?.leaders && user.leaders.split(",").map(l=> {
           const leader = users.find(u => u.id === l);
           return leader?.name ?  [leader.name, leader.middlename ,leader.lastname].join(" ") : "";
         }).join(", ")
@@ -110,8 +110,13 @@ const SideBar = function ({  setParams, params }) {
     XLSX.utils.book_append_sheet(workbook, worksheet1, 'Usuarios');
 
     // Hoja de cálculo 2
-    const worksheet2 = XLSX.utils.json_to_sheet(userTests.map(ut=> {
-      const user = users.find( u => u.id == ut.users_id);
+ 
+    const worksheet2 = XLSX.utils.json_to_sheet(userTests.length > 0 ? userTests.map(ut=> {
+      const user = users.find( u => {
+        console.log(u.id, ut.users_id);
+        return u.id == ut.users_id
+      });
+      
       const leader = users.find(u => u.id == ut.leaders_id);
       return {
               id: ut.id,
@@ -119,7 +124,7 @@ const SideBar = function ({  setParams, params }) {
               lider: [leader.name, leader.middlename, leader.lastname].join(" "),
               status: ut.status,
             }
-    }));
+    }): []);
     XLSX.utils.book_append_sheet(workbook, worksheet2, 'Invitaciones');
     
     // Hoja de cálculo 3
