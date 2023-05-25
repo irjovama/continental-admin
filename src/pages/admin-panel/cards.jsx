@@ -24,11 +24,12 @@ const TestCard = function ({
   aviableForm,
   parent,
   id,
+  userTypes,
+  setUserTypes
 }) {
   const [enable, setEnable] = useState(enableEdit);
   const [formVal, setFormVal] = useState(defaultValues);
   const [visible, setVisible] = useState(true);
-  const [userTypes, setUserTypes] = useState([]);
   
   const message =
     "¿Realmente deseas eliminar " +
@@ -74,15 +75,8 @@ const TestCard = function ({
         .catch(console.error);
     }
   }
-  async function handleTypes(){
-    const result =  await show("user_types", { limit: 1000, filterBy: `tests_id=${tests_id}`});
-    return result.data.map((r)=>{return {value: r.id, label: r.name}})
-  }
-  useEffect(()=>{
-    handleTypes().then(r=>{
-      setUserTypes(r)
-    })
-  },[])
+
+
   return (
     <CardContainer style={{ display: visible ? "block" : "none" }}>
       <CardBody>

@@ -37,6 +37,7 @@ const AdvanceReport = function ({}){
     const urlParams = useParams();
     const [users, setUsers] = useState([]);
     const [user_tests, setUserTests] = useState([]);
+    const [filter, setFilter] = useState("");
     const [copied, setCopied] = useState("copiar link");
     useEffect(()=>{
         const filter = {
@@ -53,11 +54,17 @@ const AdvanceReport = function ({}){
         <div>
             <Banner>
                <h1>Reporte de Avance </h1> 
+               <input type="search" placeholder="Buscar Lider" onInput={(e)=> setFilter(e.target.value)} value={filter} />
                <button onClick={handleCopy}>{copied}</button>
             </Banner>
             
             <Container>
-                {users.filter(u=> u?.type && u.type !="" ).map(u => {
+                {users
+                .filter(u=> u?.type && u.type !="" )
+                .filter(u => 
+                    filter=="" || [u.name, u.middlename, u.lastname].join(" ").toLowerCase().includes(filter.toLowerCase()) 
+                )
+                .map(u => {
                     const selfInvitation = user_tests.find( ut => ut.users_id == u.id && ut.leaders_id == u.id);
                     return ( <Card key={u.id}>
                                 <CardHeader> {u.name} {u.middlename} {u.lastname} {selfInvitation?.status && selfInvitation.status == 1 ? "Autoevaluacion Pendiente" : ""}</CardHeader>

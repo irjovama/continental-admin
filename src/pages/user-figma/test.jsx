@@ -66,7 +66,8 @@ const FigmaTest = function ({props}) {
             </LeftNav>
             <RightPanel>
                 <QuestionContainer>
-                    {context.questions.length && context.questions.map((q)=>{
+                
+                    {context.questions.length > 0 && context.questions.map((q)=>{
                         total++;
                         return <Question key={q.id} shadow={q.shadow}>
                                     <div>{total} {q.title}</div>

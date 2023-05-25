@@ -11,7 +11,7 @@ const invitationURI = localHost + "/invitations";
 const getPDF = async function(test_id, user_id){
   const options = {
     method: 'GET',
-    url: basePDFURI + '/tests/' + test_id + '/users/' + user_id + '/type/1'
+    url: basePDFURI + '/tests/' + test_id + '/users/' + user_id 
   };
   try {
     return (await axios.request(options)).data;
