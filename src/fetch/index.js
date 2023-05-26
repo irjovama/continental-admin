@@ -31,14 +31,20 @@ const sendPDF = async function (test_id, u){
   }
 }
 
-const send = async function (to, test_title, object) {
-  const links = object.map(o=> `Ingresa al siguiente link para realizar la encuesta ${invitationURI}/${o.token} y evaluar a ${o.leader}`).join("\n");
+const send = async function (user, test_title, object) {
+  const links = `Hola ${user.name},\n\n
+Como parte de nuestro modelo de Cultura y Liderazgo, hemos desarrollado esta evaluación de liderazgo con el objetivo de impulsar mejoras a nivel personal y en el funcionamiento de los equipos, y así poder seguir creciendo como organización.\n
+La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC:  Entrega resultados, crea vínculos genunios y Cuestiona y construye el futuro.\n
+Para contestar la encuesta haz click en cada uno de los enlaces:\n\n
+${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}
+\n\nÁrea de Bienestar y Talento`
+
   const options = {
     method: "POST",
     url: baseSendURI,
     headers: { "Content-Type": "application/json" },
     data: {
-      to: to,
+      to: user.email,
       subject: `invitación a ${test_title}`,
       text: links,
     },

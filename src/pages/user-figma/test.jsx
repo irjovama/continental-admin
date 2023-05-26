@@ -61,7 +61,7 @@ const FigmaTest = function ({props}) {
                         Bienestar y talento
                     </p>
                 </NavCard>
-                <BackLink href={"/request/"+urlParams.token}>{"< Salir"}</BackLink>
+                <BackLink href={"/invitations/"+urlParams.token}>{"< Salir"}</BackLink>
     
             </LeftNav>
             <RightPanel>

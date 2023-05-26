@@ -37,9 +37,11 @@ const UserTests = function ({
   async function sendOne(u) {
     const object = [];
     const test = await find("tests/"+tests_id)
+
     //si tiene lideres
     if (u?.leaders ) {
-      for (const l of u.leaders) {
+      const splitedLeaders = u.leaders.split(",");
+      for (const l of splitedLeaders ) {
         if(l!=""){
           const leader = await find("users/"+l)
           const item = items.find(
@@ -70,8 +72,9 @@ const UserTests = function ({
         }
       }
     }
+   
     if(object.length>0){
-      await send(u.email, test.title, object)
+      await send(u, test.title, object)
     }
   }
   async function sendForUser(u) {
