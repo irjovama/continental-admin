@@ -32,7 +32,9 @@ const FigmaTest = function ({props}) {
     async function handleSave(){
         context.setIsLoading(true);
         for(let i in result){
-            await create("user_questions", result[i]);
+            const qData = Object.assign({},result[i]);
+            delete qData.id;
+            await create("user_questions", qData);
         }
         const f = await update(urlParams.token, "user_tests", {status: 1});
      
@@ -76,7 +78,7 @@ const FigmaTest = function ({props}) {
                                         <fieldset>
                                             {lists[q.reverse].map((v, i)=>{
                                                 const newResult = Object.assign([],result);
-                                                const index = newResult.findIndex((r)=> r.id === q.id);
+                                                let index = newResult.findIndex((r)=> r.id === q.id);
                                                 return (<button 
                                                             key={i} 
                                                             onClick={() => {
@@ -86,12 +88,13 @@ const FigmaTest = function ({props}) {
                                                                 q.randSort = q.reverse ? 1 : 0;
                                                                 q.users_id = context.user.id;
                                                                 q.leaders_id = context.leader.id;
+                                                                const qData = Object.assign({}, q);
                                                                 if(index >= 0 ){
-                                                                    newResult[index] = q;
+                                                                    newResult[index] = qData
                                                                 } else {
-                                                                    newResult.push(q);
+                                                                    index = 0;
+                                                                    newResult.push(qData);
                                                                 }
-                                                                console.log(newResult);
                                                                 setResult(newResult);
                                                             }}
                                                             style={{

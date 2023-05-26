@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { show } from "../../fetch";
 import colors from "../../styles/colors";
 import { useNavigate, useParams } from "react-router";
 import * as XLSX from 'xlsx';
+import InfoContext from "../../context";
+import Loader from "../../components/loading";
 const Ul = styled.ul`
   padding-inline-start: 1rem;
   background-color: ${colors.white};
@@ -58,6 +60,7 @@ function saveAsExcelFile(buffer, fileName) {
   }
 }
 const SideBar = function ({  setParams, params }) {
+
   const navigate = useNavigate();
   const [tests, setTests] = useState([]);
   const [userTypes, setUserTypes] = useState([]);
@@ -69,25 +72,43 @@ const SideBar = function ({  setParams, params }) {
   const [userTests, setUserTests] = useState("");
   const [users, setUsers] = useState("");
   const [userQuestions, setUserQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const urlParams = useParams();
   useEffect(() => {
+    handleLoad().then(() =>{
+      setLoading(false);
+    })
+  }, []);
+
+  const handleLoad = async function () {
+    let t;
     const filter = {
       limit: 10000000,
       filterBy: `tests_id=${urlParams.tests_id}`,
     };
-    show("tests", {
+    t = await show("tests", {
       limit: 10000000,
       filterBy: `id=${urlParams.tests_id}`,
-    }).then((t) => setTests(t.data));
-    show("user_types", filter).then((t) => setUserTypes(t.data));
-    show("user_tests", filter).then((t) => setUserTests(t.data));
-    show("users", filter).then((t) => setUsers(t.data));
-    show("categories", filter).then((t) => setCategories(t.data));
-    show("sub_categories", filter).then((t) => setSubCategories(t.data));
-    show("questions", filter).then((t) => setQuestions(t.data));
-    show("results", filter).then((t) => setResults(t.data));
-    show("user_questions", filter).then((t) => setUserQuestions(t.data));
-  }, []);
+    })
+    setTests(t.data);
+    t = await show("user_types", filter);
+    setUserTypes(t.data);
+    t = await show("user_tests", filter)
+    setUserTests(t.data);
+    t = await show("users", filter)
+    setUsers(t.data);
+    t = await show("categories", filter);
+    setCategories(t.data);
+    t = await show("sub_categories", filter);
+    setSubCategories(t.data);
+    t = await show("questions", filter)
+    setQuestions(t.data);
+    t = await show("results", filter);
+    setResults(t.data);
+    t = show("user_questions", filter);
+    setUserQuestions(t.data);
+
+  }
   const handleExport = function (){
     const workbook = XLSX.utils.book_new();
 
@@ -154,6 +175,8 @@ const SideBar = function ({  setParams, params }) {
   }
   
   return (
+    <>
+    {loading ?  <Loader />  :
     <Container>
       <Ul>
         {tests.map((t) => {
@@ -193,7 +216,7 @@ const SideBar = function ({  setParams, params }) {
                         tests_id: t.id,
                         parent: { tests_id: t.id },
                         items: results.filter(
-                          (r) => !r.categories_id && !r.sub_categories_id
+                          (r) => r.categories_id==0 && r.sub_categories_id==0
                         ),
                         setItems: setResults,
                       });
@@ -460,6 +483,9 @@ const SideBar = function ({  setParams, params }) {
         })}
       </Ul>
     </Container>
-  );
+}
+    </>
+  )
+    
 };
 export default SideBar;
