@@ -130,6 +130,15 @@ const Arrows = function () {
     </svg>
     )
 }
+const Alert = function () {
+    return (
+        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="13.5" cy="13.5" r="13" fill="white" stroke="#7A00C6"/>
+<path d="M12.1354 7.292H14.8714L14.5114 16.076H12.4954L12.1354 7.292ZM13.5034 20.324C13.0474 20.324 12.6754 20.192 12.3874 19.928C12.1114 19.652 11.9734 19.292 11.9734 18.848C11.9734 18.392 12.1114 18.032 12.3874 17.768C12.6754 17.492 13.0474 17.354 13.5034 17.354C13.9594 17.354 14.3254 17.492 14.6014 17.768C14.8894 18.032 15.0334 18.392 15.0334 18.848C15.0334 19.292 14.8894 19.652 14.6014 19.928C14.3254 20.192 13.9594 20.324 13.5034 20.324Z" fill="#7A00C6"/>
+</svg>
+
+    )
+}
 
 const Persons = function () {
     return (<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,4 +226,5 @@ export {
     Loved,
     ArrowUp,
     Point,
+    Alert,
 };

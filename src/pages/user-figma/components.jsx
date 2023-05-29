@@ -43,7 +43,7 @@ const Title = styled.div`
     color: #7A00C6;
     margin: auto;
     text-align: center;
-    width: 600px;
+    width: 1000px;
     display: flex;
     flex-direction:column;
     align-items: center;
@@ -172,10 +172,10 @@ const Paragraph = styled.p`
     font-family: 'Neue Plak';
     font-style: normal;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 130%;
     /* or 23px */
-
+    text-align: justify;
 
     color: #000000;
 `;
@@ -251,7 +251,20 @@ const ProgresCardContainer = styled.div`
     align-items: top;
     width: 600px;
     
-`
+`;
+
+const AlertMessage = styled.div`font-family: 'Neue Plak';
+font-style: normal;
+font-weight: 400;
+font-size: 18px;
+line-height: 130%;
+/* or 23px */
+
+display: flex;
+flex-direction: row;
+margin: 1rem;
+gap: 1rem;
+color: #7A00C6;`
 const ProgresCard = styled.div`
     display: flex;
     flex-direction: column;
@@ -359,4 +372,5 @@ export {
             ProgresCardContainer,
             QuestionContainer,
             Question,
+            AlertMessage,
         };

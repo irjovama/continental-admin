@@ -40,27 +40,29 @@ const FigmaInfo = function ({props}) {
                 <Title>
                     <LeftAlign>
                         Hola {`${context.user.name} ${context.user.middlename} ${context.user.lastname}`} 
-                        <p>te damos la bienvenida</p>
+                        <p>Te damos la bienvenida</p>
                         <Paragraph>
             
 
-                            <p>Recordemos nuestros propósito y mantras culturales:</p>
-
+                            Recordemos nuestros propósito y mantras culturales:
+                        </Paragraph>
+                        <Paragraph>
                             <Important>Propósito:</Important>  Existimos porque creemos que lo imposible es posible cuando las personas confiamos en nuestro potencial para crear mejores versiones de futuro.
                         </Paragraph>
                         <Paragraph>
-                            <p>Nuestros mantras culturales: </p>
-
-                            <p>Vivimos nuestro propósito en cada acción que emprendemos;  nos esforzamos al máximo para alcanzar lo que nos proponemos.
+                            <Important>Nuestros mantras culturales: </Important>
+                        </Paragraph>
+                        <Paragraph>
+                            Vivimos nuestro propósito en cada acción que emprendemos;  nos esforzamos al máximo para alcanzar lo que nos proponemos.
                             Vivimos con empatía, ponemos al usuario al centro de todas nuestras decisiones.
-                            Siempre aprendemos.</p>
-
-                            <p>
+                            Siempre aprendemos.
+                        </Paragraph>
+                        <Paragraph>
                             Hemos desarrollado esta evaluación de liderazgo con el objetivo de impulsar mejoras a nivel personal y en el funcionamiento de los equipos, y así poder seguir creciendo como organización.
+                        </Paragraph>
+                        <Paragraph>
+                            La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC: 
 
-                            </p>
-                            <p>La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC: 
-</p>
                         </Paragraph>
                         <Paragraph>
                             <Important>Entrega resultados:</Important> Esta dimensión está centrada en impulsar el logro de resultados, poniendo foco tanto a la ejecución efectiva, como a la conexión de los logros con el propósito. Para cada estadio del modelo se esperan comportamientos que reflejan ambas cualidades.

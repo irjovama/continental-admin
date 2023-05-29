@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import InfoContext from "../../context";
 import {  useNavigate, useParams } from "react-router";
 import { 
+    AlertMessage,
     BackLink, 
     BlankContainer, 
     LeftNav, 
@@ -17,7 +18,7 @@ import {
     QuestionContainer, 
     RightPanel 
 } from "./components";
-import  {  LogosMini} from "../../assets/logos";
+import  {  Alert, LogosMini} from "../../assets/logos";
 import { create, update } from "../../fetch";
 
 const FigmaTest = function ({props}) {
@@ -29,6 +30,11 @@ const FigmaTest = function ({props}) {
     useEffect(()=>{
         context.setToken(urlParams.token);
     },[])
+    function questionFormat(text){
+        return text.split("").map((v, i)=> {
+            return i==0 ? v.toUpperCase() : v.toLowerCase();
+        }).join("");
+    }
     async function handleSave(){
         context.setIsLoading(true);
         for(let i in result){
@@ -72,9 +78,9 @@ const FigmaTest = function ({props}) {
                     {context.questions.length > 0 && context.questions.map((q)=>{
                         total++;
                         return <Question key={q.id} shadow={q.shadow}>
-                                    <div>{total} {q.title}</div>
+                                    <div>{total}.- {questionFormat(q.title)}</div>
                                     <fieldset>
-                                        <div>{q.reverse ? q.upper_option : q.lower_option}</div>
+                                        <div>{questionFormat(q.reverse ? q.upper_option : q.lower_option)}</div>
                                         <fieldset>
                                             {lists[q.reverse].map((v, i)=>{
                                                 const newResult = Object.assign([],result);
@@ -106,10 +112,21 @@ const FigmaTest = function ({props}) {
                                                         </button>)
                                             })}
                                         </fieldset>
-                                        <div>{q.reverse ? q.lower_option : q.upper_option}</div>
+                                        <div>{questionFormat(q.reverse ? q.lower_option : q.upper_option)}</div>
                                     </fieldset>
                                 </Question>
                     })}
+                    {(((result.length / context.questions.length) * 100) || 0) == 100 ? <></> : <AlertMessage>
+                        <Alert /> ¡Ups! Te falta algún enunciado
+                    </AlertMessage>}
+                    
+                    <PrimaryButton
+                        disabled={(((result.length / context.questions.length) * 100) || 0) == 100 ? false : true}
+                        onClick={handleSave}
+                    >
+                        Terminar
+                    </PrimaryButton>
+                    <br></br>
                 </QuestionContainer>
                 <ProressWrapper>
                     <ProgressInfo>
