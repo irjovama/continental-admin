@@ -1,7 +1,7 @@
 import styled from "styled-components";
 const LeftNav = styled.div`
     position: fixed;
-    width: 238px;
+    width: 15%;
     height: 100%;
     background: #FFFFFF;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -11,8 +11,9 @@ const LeftNav = styled.div`
     align-items: center;
 `
 const RightPanel = styled.div`
+    margin-left: 8%;
     height: 100%;
-    width: 100%;
+    width: 85%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,6 +24,7 @@ const BlankContainer = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: row;
+    
 
 `
 const Container = styled.div`
