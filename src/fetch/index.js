@@ -37,7 +37,9 @@ Como parte de nuestro modelo de Cultura y Liderazgo, hemos desarrollado esta eva
 La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC:  Entrega resultados, crea vínculos genunios y Cuestiona y construye el futuro.\n
 Para contestar la encuesta haz click en cada uno de los enlaces:\n\n
 ${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}\n\n
-Agradeceremos puedas completar la evaluacíón hasta el 8 de junio. Si tienes alguna duda o consulta, puedes escribir a Bienestarytalento@continental.edu.pe
+IMPORTANTE\n
+Por favor completa la evaluacíón hasta el 8 de junio. \n
+Si tienes alguna duda o consulta, puedes escribirnos a Bienestarytalento@continental.edu.pe
 \n\nÁrea de Bienestar y Talento`
 
   const options = {
