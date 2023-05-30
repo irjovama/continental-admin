@@ -9,6 +9,7 @@ const aviableForms = {
     { title: "" },
     { lower_option: "" },
     { upper_option: "" },
+    { type: 0 },
     { index: 0 },
     { weight: 0 },
   ],

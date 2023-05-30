@@ -35,35 +35,42 @@ const InfoProvider = ({ children }) => {
 
   useEffect(() =>{
     handleLoad();
-  },[leader])
+  },[leader, user])
 
   
 
   async function handleLoad(){
-    setIsLoading(true);
-    const limit = 999999;
-    const allQ = [];
-    const allSC = [];
-    let shadow = false;
-    const categories = await show("categories", {limit, filterBy: `user_types_id=${leader.type}` });
-    setCategories(categories);
-    for(let i in categories.data){
-      const subCategories = await show("sub_categories", {limit, filterBy: `categories_id=${categories.data[i].id}`});
-      for(let j in subCategories.data){
-        allSC.push(subCategories.data[j]);
-        const q = await show("questions", {limit, filterBy: `sub_categories_id=${subCategories.data[j].id}`});
-        for(let k in q.data){
-          const addQ = q.data[k];
-          addQ.reverse = Math.random() < 0.5;
-          addQ.shadow = shadow;
-          shadow = !shadow;
-          allQ.push(addQ);
+    if(user?.id && leader?.id){
+      setIsLoading(true);
+      const limit = 999999;
+      const allQ = [];
+      const allSC = [];
+      let shadow = false;
+      const categories = await show("categories", {limit, filterBy: `user_types_id=${leader.type}` });
+      setCategories(categories);
+      for(let i in categories.data){
+        const subCategories = await show("sub_categories", {limit, filterBy: `categories_id=${categories.data[i].id}`});
+        for(let j in subCategories.data){
+          allSC.push(subCategories.data[j]);
+          const q = await show("questions", {limit, filterBy: `sub_categories_id=${subCategories.data[j].id}`});
+          for(let k in q.data){
+            const f = user.id === leader.id ? 1 : 0;
+            if(q.data[k].type === f){
+              console.log(f)
+              const addQ = q.data[k];
+              addQ.reverse = Math.random() < 0.5;
+              addQ.shadow = shadow;
+              shadow = !shadow;
+              allQ.push(addQ);
+            }
+          }
         }
       }
+      setSubCategories(allSC);
+      setQuestions(allQ);
+      setIsLoading(false);
     }
-    setSubCategories(allSC);
-    setQuestions(allQ);
-    setIsLoading(false);
+    
   }
 
 

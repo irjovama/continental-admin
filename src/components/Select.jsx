@@ -18,7 +18,11 @@ const Select = function ({ ...props }) {
       <Title>{props.name}:</Title>
       <StyledInput
         multiple={props.multiple}
-        value={props.value?.[props.name] ? props.value[props.name].split(",") :""}
+        value={props.value?.[props.name] 
+          ? props.multiple 
+            ? props.value[props.name].split(",")
+            : props.value[props.name]
+          :""}
         onChange={(e) => {
           
           const selectedValues = 
@@ -28,8 +32,8 @@ const Select = function ({ ...props }) {
             (option) => option.value
           ) 
           : e.target.value;
-          console.log(selectedValues.join(","))
-          props.setValue({ ...props.value, [props.name]: selectedValues.join(",") });
+          console.log(e.target.value)
+          props.setValue({ ...props.value, [props.name]: props.multiple ? selectedValues.join(",") : selectedValues });
         }}
       >
         <option value={""}>Seleccionar una opcion</option>
