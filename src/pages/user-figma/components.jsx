@@ -11,7 +11,7 @@ const LeftNav = styled.div`
     align-items: center;
 `
 const RightPanel = styled.div`
-    margin-left: 8%;
+    margin-left: 15%;
     height: 100%;
     width: 85%;
     display: flex;
