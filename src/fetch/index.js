@@ -36,7 +36,8 @@ const send = async function (user, test_title, object) {
 Como parte de nuestro modelo de Cultura y Liderazgo, hemos desarrollado esta evaluación de liderazgo con el objetivo de impulsar mejoras a nivel personal y en el funcionamiento de los equipos, y así poder seguir creciendo como organización.\n
 La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC:  Entrega resultados, crea vínculos genunios y Cuestiona y construye el futuro.\n
 Para contestar la encuesta haz click en cada uno de los enlaces:\n\n
-${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}
+${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}\n\n
+Agradeceremos puedas completar la evaluacíón hasta el 8 de junio. Si tienes alguna duda o consulta, puedes escribir a Bienestarytalento@continental.edu.pe
 \n\nÁrea de Bienestar y Talento`
 
   const options = {
@@ -45,7 +46,7 @@ ${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).joi
     headers: { "Content-Type": "application/json" },
     data: {
       to: user.email,
-      subject: `invitación a ${test_title}`,
+      subject: `¡Evalúa a tu líder!`,
       text: links,
     },
   };
