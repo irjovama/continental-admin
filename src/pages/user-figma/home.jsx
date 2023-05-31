@@ -18,7 +18,7 @@ const FigmaHome = function ({props}) {
         <Container >
             <Title>
                 <Logos/>
-                ¡Te damos la bienvenida a la Encuesta de {context.test.title}!
+                ¡Te damos la bienvenida a la Evaluación de liderazgo de {context.test.title}!
                 <div>
                     <PrimaryButton onClick={handleNavigate} >Empezar</PrimaryButton>
                 </div>
