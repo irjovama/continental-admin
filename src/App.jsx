@@ -15,6 +15,7 @@ import FigmaInfo from "./pages/user-figma/info";
 import FigmaTest from "./pages/user-figma/test";
 import FigmaFinish from "./pages/user-figma/finish";
 import Report from "./pages/report";
+import FigmaHome2 from "./pages/user-figma/home2";
 
 
 
@@ -26,11 +27,12 @@ function App() {
         <InfoProvider  >
           <Routes>
             
-            <Route path="*" element={<Home />}></Route>
+            <Route path="*" element={<>Url inválido</>}></Route>
             <Route path="admin-panel/:tests_id" element={<AdminPanel />}></Route>
             <Route path="advance-report/:tests_id" element={<AdvanceReport />}></Route>
             <Route path="report/test/:test_id/leader/:leader_id" element={<Report />}></Route>
             <Route path="invitations/:token" element={<FigmaHome   />}></Route>
+            <Route path="invitations" element={<FigmaHome2   />}></Route>
             <Route path="invitations/:token/info" element={<FigmaInfo />}></Route>
             <Route path="invitations/:token/info/test" element={<FigmaTest />}></Route>
             <Route path="finish/:token" element={<FigmaFinish />}></Route>

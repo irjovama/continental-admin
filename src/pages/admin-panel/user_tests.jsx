@@ -21,7 +21,14 @@ const UserTests = function ({
     show("users", {
       limit: 1000000,
       filterBy: `tests_id=${tests_id}`
-    }).then((t) => setUsers(t.data));
+    }).then((t) => setUsers(
+      t.data
+      // .filter(user => {
+      //   const it = items.map( i => i.users_id);
+      //   const id = user.id;
+      //   return !it.includes(id);
+      // })
+    ));
   }, []);
 
   async function createUT(user, leader) {
@@ -53,7 +60,7 @@ const UserTests = function ({
             object.push({token: result.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
           } else {
             if (item.status == 0) {
-              //object.push({token: item.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
+              object.push({token: item.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
             }
           }
         }
@@ -69,7 +76,7 @@ const UserTests = function ({
         object.push({token: result.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});
       } else {
         if (item.status == 0) {
-          //object.push({token: item.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});      
+          object.push({token: item.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});      
         }
       }
     }
@@ -98,7 +105,8 @@ const UserTests = function ({
 
   async function sendAll() {
     setLoading(true);
-    for (const u of users) {
+    for (const u of users
+      ) {
       await sendOne(u);
     }
     setLoading(false);
