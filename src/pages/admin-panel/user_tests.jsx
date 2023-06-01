@@ -43,16 +43,17 @@ const UserTests = function ({
       const splitedLeaders = u.leaders.split(",");
       for (const l of splitedLeaders ) {
         if(l!=""){
-          const leader = await find("users/"+l)
+          
           const item = items.find(
             (it) => it.users_id == u.id && it.leaders_id == l
           );
           if (!item) {
+            const leader = await find("users/"+l)//despues lo movemos
             const result = await createUT(u, leader);
             object.push({token: result.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
           } else {
             if (item.status == 0) {
-              object.push({token: item.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
+              //object.push({token: item.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
             }
           }
         }
@@ -68,13 +69,15 @@ const UserTests = function ({
         object.push({token: result.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});
       } else {
         if (item.status == 0) {
-          object.push({token: item.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});      
+          //object.push({token: item.id, leader: `${u.name} ${u.middlename} ${u.lastname}`});      
         }
       }
     }
    
     if(object.length>0){
       await send(u, test.title, object)
+    } else {
+      console.log("no se manda para "+u.email)
     }
   }
   async function sendForUser(u) {
@@ -90,7 +93,7 @@ const UserTests = function ({
     setLoading(true);
     const data = await sendPDF(tests_id, u)
     setLoading(false);
-    alert(data.result)
+    console.log(data.result)
   }
 
   async function sendAll() {
@@ -104,16 +107,20 @@ const UserTests = function ({
 
   return (
     <Container>
-       
+       {console.log()}
         <>
           <PrimaryButton
             onClick={() => {
+              console.log("empezar")
               sendAll();
             }}
           >
             Enviar Todas las Invitaciones
           </PrimaryButton>
-          {users.map((u) => (
+
+          {users
+          // .filter( (u) => items.map( i => i.users_id).includes(u.id) )
+          .map((u) => (
             <Card key={u.id}>
                 <PrimaryButton
                   onClick={() => {

@@ -31,6 +31,10 @@ const sendPDF = async function (test_id, u){
   }
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const send = async function (user, test_title, object) {
   const links = `Hola ${user.name},\n\n
 Como parte de nuestro modelo de Cultura y Liderazgo, hemos desarrollado esta evaluación de liderazgo con el objetivo de impulsar mejoras a nivel personal y en el funcionamiento de los equipos, y así poder seguir creciendo como organización.\n
@@ -54,9 +58,13 @@ Si tienes alguna duda o consulta, puedes escribirnos a Bienestarytalento@contine
   };
   console.log("enviando...", user.email);
   try {
+    // await sleep(200)
     return (await axios.request(options)).data;
   } catch (err) {
-    return err;
+    console.log(err, "reintentando...", user.email);
+    await sleep(20000)
+    return await send(user, test_title, object);
+    // return err;
   }
 };
 
