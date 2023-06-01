@@ -99,14 +99,12 @@ const UserTests = function ({
       await sendOne(u);
     }
     setLoading(false);
-    alert("Correos enviados");
+    console.log("Correos enviados");
   }
 
   return (
     <Container>
-      {loading ? (
-        <>Sending...</>
-      ) : (
+       
         <>
           <PrimaryButton
             onClick={() => {
@@ -153,7 +151,7 @@ const UserTests = function ({
             </Card>
           ))}
         </>
-      )}  
+      
     </Container>
       
   );
