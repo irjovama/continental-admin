@@ -5,7 +5,7 @@ import { Container, PrimaryButton, TextInfo, Title } from "./components";
 import  { Logos} from "../../assets/logos";
 import styled from "styled-components";
 import Loader from "../../components/loading";
-import { find, show } from "../../fetch";
+import { find, show , send } from "../../fetch";
 import { Link } from "react-router-dom";
 const MailContainer = styled.div`
 padding: 10px;
@@ -54,16 +54,20 @@ const FigmaHome2 = function ({props}) {
                     
                     show("user_tests", {limit: 100000, filterBy: `users_id=${u.data[0].id}`}).then( async test => {
                         const rows = [];
-                        for(let t of test.data.filter(t=>{ t.status == 0})){
+                        const object = [];
+                        const dataFilter = test.data.filter(t1=>{ return t1.status == 0});
+                        console.log(dataFilter);
+                        for(let t of dataFilter){
                             const leader = await find("users/"+t.leaders_id); 
-                            console.log(leader)
                             rows.push({leader, test: t});
+                            object.push({token: t.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
                         }
                         setInvitations(rows);
-                        if(rows.length == 0 && test.data.length > 0){
-                            setState("finished");
+                        if(object.length>0){
+                            await send(u.data[0], test.title, object);
+                            setState("complete")
                         } else {
-                            setState("complete");
+                            setState("finished");
                         }
                         
                         
@@ -106,18 +110,9 @@ const FigmaHome2 = function ({props}) {
                        state == 'pending' ? "" :
                        state == 'loading' ? <Loader /> : 
                        state == 'complete' ? 
-                       <>
-                        {
-                            invitations.map(invitation => {
-                                return <div>
-                             
-                                    <Link to={""+invitation.test.id+"/info"} key={invitation.test.id}>
-                                        {invitation.leader.id == invitation.test.users_id ? "Auto evaluación" : invitation.leader.name}
-                                    </Link>
-                                </div>
-                            })
-                        }
-                       </> 
+                       <div>
+                        Se envío un correo con las invitaciones
+                       </div> 
                        : 
                        state == "finished" ? 
                        <div>Ya contestaste todas tus encuestas</div> 
