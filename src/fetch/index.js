@@ -52,6 +52,7 @@ Si tienes alguna duda o consulta, puedes escribirnos a Bienestarytalento@contine
       text: links,
     },
   };
+  console.log("enviando...", user.email);
   try {
     return (await axios.request(options)).data;
   } catch (err) {
