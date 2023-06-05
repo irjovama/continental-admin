@@ -21,14 +21,18 @@ const UserTests = function ({
     show("users", {
       limit: 1000000,
       filterBy: `tests_id=${tests_id}`
-    }).then((t) => setUsers(
-      t.data
+    }).then((t) => {
+      const uf = t.data
+      .filter(user => user.email != "")
       .filter(user => {
         const it = items.filter(it=> it.send=="0000-00-00 00:00:00" && it.status==0).map( i => i.users_id);
+        console.log(it)
         const id = user.id;
         return it.includes(id);
-      })
-    ));
+      });
+      console.log(uf)
+      setUsers(uf )
+    });
   }, []);
 
   async function createUT(user, leader) {
