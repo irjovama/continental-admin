@@ -105,7 +105,8 @@ const SideBar = function ({  setParams, params }) {
     setQuestions(t.data);
     t = await show("results", filter);
     setResults(t.data);
-    t = show("user_questions", filter);
+    t = await show("user_questions", filter);
+
     setUserQuestions(t.data);
 
   }
@@ -150,6 +151,7 @@ const SideBar = function ({  setParams, params }) {
     XLSX.utils.book_append_sheet(workbook, worksheet2, 'Invitaciones');
     
     // Hoja de cálculo 3
+    console.log("userQuestions", userQuestions);
     const worksheet3 = XLSX.utils.json_to_sheet(userQuestions.map(uq=> {
       const userType = userTypes.find(c => c.id === uq.users_type);
       const subCategory = subCategories.find(c => c.id === uq.sub_categories_id);

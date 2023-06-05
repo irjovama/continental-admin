@@ -85,16 +85,21 @@ const UserTests = function ({
     }
    
     if(object.length>0){
-      const send_state = await send(u, test.title, object);
-      console.log(send_state);
-      if(!send_state){
-        return false;
-      } else {
-        for(let myo of object){
-          await updateSendDate(myo.token);
+      if(u.email !=""){
+        const send_state = await send(u, test.title, object);
+        console.log(send_state);
+        if(!send_state){
+          return false;
+        } else {
+          for(let myo of object){
+            await updateSendDate(myo.token);
+          }
+          return true;
         }
+      } else {
         return true;
       }
+      
     } else {
       console.log("no se manda para "+u.email);
       return true;
