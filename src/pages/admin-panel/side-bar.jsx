@@ -132,19 +132,20 @@ const SideBar = function ({  setParams, params }) {
 
     // Hoja de cálculo 2
  
-    const worksheet2 = XLSX.utils.json_to_sheet(userTests.length > 0 ? userTests.map(ut=> {
+    const worksheet2 = XLSX.utils.json_to_sheet(userTests.length > 0 ? userTests.filter(uts=> uts.leaders_id != 0).map(ut=> {
       const user = users.find( u => {
-        console.log(u.id, ut.users_id);
         return u.id == ut.users_id
       });
       
       const leader = users.find(u => u.id == ut.leaders_id);
-      return {
-              id: ut.id,
-              usuario: [user.name, user.middlename, user.lastname].join(" "),
-              lider: [leader.name, leader.middlename, leader.lastname].join(" "),
-              status: ut.status,
-            }
+      if(!leader) {console.log(ut.leaders_id, user)};
+        return {
+                id: ut.id,
+                usuario: [user.name || "", user.middlename || "", user.lastname || ""].join(" "),
+                lider: [leader.name || "", leader.middlename || "", leader.lastname || ""].join(" "),
+                status: ut.status,
+              }
+        
     }): []);
     XLSX.utils.book_append_sheet(workbook, worksheet2, 'Invitaciones');
     

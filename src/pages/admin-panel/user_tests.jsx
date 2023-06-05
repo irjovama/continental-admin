@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { create, show, send, find, sendPDF } from "../../fetch";
+import { create, show, send, find, sendPDF, update } from "../../fetch";
 import styled from "styled-components";
 import PrimaryButton from "../../components/primary-button";
 const Container = styled.div`
@@ -23,22 +23,26 @@ const UserTests = function ({
       filterBy: `tests_id=${tests_id}`
     }).then((t) => setUsers(
       t.data
-      // .filter(user => {
-      //   const it = items.map( i => i.users_id);
-      //   const id = user.id;
-      //   return !it.includes(id);
-      // })
+      .filter(user => {
+        const it = items.filter(it=> it.send=="0000-00-00 00:00:00" && it.status==0).map( i => i.users_id);
+        const id = user.id;
+        return it.includes(id);
+      })
     ));
   }, []);
 
   async function createUT(user, leader) {
-    const result = await create("user_tests", {
-      users_id: user.id,
-      leaders_id: leader.id,
-      tests_id,
-      status: 0,
-    });
-    return result;
+    if(leader.id >0 ){
+      const result = await create("user_tests", {
+        users_id: user.id,
+        leaders_id: leader.id,
+        tests_id,
+        status: 0,
+      });
+      return result;
+    } else {
+      return false;
+    }
   }
 
   async function sendOne(u) {
@@ -50,12 +54,11 @@ const UserTests = function ({
       const splitedLeaders = u.leaders.split(",");
       for (const l of splitedLeaders ) {
         if(l!=""){
-          
+          const leader = await find("users/"+l) //despues lo movemosr
           const item = items.find(
             (it) => it.users_id == u.id && it.leaders_id == l
           );
           if (!item) {
-            const leader = await find("users/"+l)//despues lo movemos
             const result = await createUT(u, leader);
             object.push({token: result.id, leader: `${leader.name} ${leader.middlename} ${leader.lastname}`});
           } else {
@@ -82,11 +85,23 @@ const UserTests = function ({
     }
    
     if(object.length>0){
-      await send(u, test.title, object)
+      const send_state = await send(u, test.title, object);
+      console.log(send_state);
+      if(!send_state){
+        return false;
+      } else {
+        for(let myo of object){
+          await updateSendDate(myo.token);
+        }
+        return true;
+      }
     } else {
-      console.log("no se manda para "+u.email)
+      console.log("no se manda para "+u.email);
+      return true;
     }
   }
+
+
   async function sendForUser(u) {
     setLoading(true);
 
@@ -103,11 +118,25 @@ const UserTests = function ({
     console.log(data.result)
   }
 
+
+  async function updateSendDate(token){
+    const date = (new Date()).getFullYear() + "-" +
+                  (new Date()).getMonth() + "-" +
+                  (new Date()).getDay();
+    const upd = await update(token, "user_tests", { send: date});
+    console.log(upd);
+  }
+
+
   async function sendAll() {
     setLoading(true);
     for (const u of users
       ) {
-      await sendOne(u);
+      const state = await sendOne(u);
+      if(!state) {
+        console.log("break", state)
+        break;
+      } 
     }
     setLoading(false);
     console.log("Correos enviados");

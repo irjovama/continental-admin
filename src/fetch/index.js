@@ -56,14 +56,15 @@ Si tienes alguna duda o consulta, puedes escribirnos a Bienestarytalento@contine
       text: links,
     },
   };
-  console.log("enviando...", user.email);
+
   try {
-    // await sleep(200)
+    await sleep(3000)
     return (await axios.request(options)).data;
   } catch (err) {
-    console.log(err, "reintentando...", user.email);
-    await sleep(20000)
-    return await send(user, test_title, object);
+    return false;
+    // console.log(err, "reintentando...", user.email);
+    // await sleep(5*60*1000)
+    // return await send(user, test_title, object);
     // return err;
   }
 };
