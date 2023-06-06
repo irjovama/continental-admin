@@ -12,7 +12,9 @@ const Wrapper = styled.div`
     gap: 1rem;
 `
 const Container = styled.div`
+
     width: 595px;
+    min-height: 1110px;
     padding: 1rem;
 `;
 
@@ -30,7 +32,7 @@ const Header = styled.div`
 `;
 
 const Section = styled.div`
-    padding: 50px 0;
+    padding: 25px 0;
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #6802B5;
@@ -193,6 +195,7 @@ const P2Card = styled.div`
     
    
     & > h1 {
+        
         width: 110px;
         height: 110px;
         background: #F7F5FF;
@@ -234,7 +237,7 @@ const P2Info = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin-left: 1rem;
-    & > h1 {
+    & > div > h1 {
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 600;
@@ -244,7 +247,8 @@ const P2Info = styled.div`
         color: #1C1C1A;
     }
 
-    & > p {
+    & > div > p {
+
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 400;

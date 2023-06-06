@@ -24,13 +24,13 @@ const UserTests = function ({
     }).then((t) => {
       const uf = t.data
       .filter(user => user.email != "")
-      .filter(user => {
-        const it = items.filter(it=> it.send=="0000-00-00 00:00:00" && it.status == 0).map( i => i.users_id);
-        console.log(it)
-        const id = user.id;
-        return it.includes(id);
-      });
-      console.log(uf)
+      // // .filter(user => {
+      // //   const it = items.filter(it=> it.send=="0000-00-00 00:00:00" && it.status == 0).map( i => i.users_id);
+      // //   console.log(it)
+      // //   const id = user.id;
+      // //   return it.includes(id);
+      // // });
+      // console.log(uf)
       setUsers(uf )
     });
   }, []);
@@ -121,10 +121,8 @@ const UserTests = function ({
   }
 
   async function sendReport(u) {
-    setLoading(true);
-    const data = await sendPDF(tests_id, u)
-    setLoading(false);
-    console.log(data.result)
+  
+    window.open("/report/test/1/leader/"+u.id, "_blank");
   }
 
 
@@ -175,13 +173,15 @@ const UserTests = function ({
                 >
                   Enviar Invitaciones {" "}
                 </PrimaryButton>
+                {u.type != "" ? 
                 <PrimaryButton
-                  onClick={() => {
-                    sendReport(u);
-                  }}
-                >
-                  Enviar Reporte {" "}
-                </PrimaryButton>
+                onClick={() => {
+                  sendReport(u);
+                }}
+              >
+                Enviar Reporte {" "}
+              </PrimaryButton>
+               : ""}
               <span>
                 {u.name} {u.middlename} {u.lastname}
               </span>
