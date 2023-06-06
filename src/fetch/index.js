@@ -13,16 +13,18 @@ const getPDF = async function(test_id, user_id){
     method: 'GET',
     url: basePDFURI + '/tests/' + test_id + '/users/' + user_id 
   };
+  console.log(options);
   try {
     return (await axios.request(options)).data;
   } catch (err) {
+    console.log(err);
     return err;
   }
 }
 const sendPDF = async function (test_id, u){
   const options = {
     method: 'GET',
-    url: basePDFURI + '/tests/' + test_id + '/users/' + u.id + '/type/3'
+    url: basePDFURI + '/tests/' + test_id + '/users/' + u.id 
   };
   try {
     return (await axios.request(options)).data;

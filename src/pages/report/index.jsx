@@ -12,7 +12,8 @@ const Report = function (){
 
         getPDF(urlParams.test_id, urlParams.leader_id).then((pdf) => {
             setReport(pdf);
-        });
+        })
+        .catch(console.log);
     },[]) ;
     const icons = {
         "Entrega de resultados": <Roquet />,
@@ -21,7 +22,7 @@ const Report = function (){
     } 
     return(
         <>
-        {report?.title? (<Wrapper>
+        {report?.title? (< Wrapper key={report.title}>
             <Container>
                 <Header>
                     <span>
@@ -72,7 +73,7 @@ const Report = function (){
                         <fieldset >
                            
                             {report.pages.page1.vsGraphs.map((g)=>{
-                                return <div><img src={g.chart} /></div>;
+                                return <div key={g.chart}><img src={g.chart} /></div>;
                             })}
                         </fieldset>
                         
@@ -97,7 +98,7 @@ const Report = function (){
                 </Section>
                 {report.pages.page2.categories.map((category) => {
                     return (
-                    <Section>
+                    <Section key={category.name}>
                         <P2Card>
                             <h1>{category.result}%</h1>
                             <div>{icons[category.name]}</div>
@@ -105,10 +106,10 @@ const Report = function (){
                         </P2Card>
                         <P2Info>
                         {category.subCategories.map((sc)=>{
-                            return <>
+                            return <div key={sc.name}>
                                         <h1>{sc.name}</h1>
                                         <p>{sc.body}</p>
-                                    </>
+                                    </div>
                         })}
                     </P2Info>
                     </Section>)
@@ -119,7 +120,7 @@ const Report = function (){
 
             {report.pages.resumes.map((resume) => {
                 return (
-                <Container>
+                <Container key={resume.category}>
                     <Header>
                         <span>
                             Reporte de encuesta de {report.title}
