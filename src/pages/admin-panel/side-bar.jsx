@@ -145,6 +145,7 @@ const SideBar = function ({  setParams, params }) {
                 usuario: [user.name || "", user.middlename || "", user.lastname || ""].join(" "),
                 lider: [leader.name || "", leader.middlename || "", leader.lastname || ""].join(" "),
                 status: ut.status,
+                mail: user.email || "",
               }
         
     }): []);
