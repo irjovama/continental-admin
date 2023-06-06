@@ -179,7 +179,7 @@ const UserTests = function ({
                   sendReport(u);
                 }}
               >
-                Enviar Reporte {" "}
+                Enviar Reporte 
               </PrimaryButton>
                : ""}
               <span>
