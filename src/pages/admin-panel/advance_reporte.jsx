@@ -69,7 +69,7 @@ const AdvanceReport = function ({}){
                 .map(u => {
                     const selfInvitation = user_tests.find( ut => ut.users_id == u.id && ut.leaders_id == u.id);
                     return ( <Card key={u.id}>
-                                <CardHeader> {u.name} {u.middlename} {u.lastname} {selfInvitation?.status && selfInvitation.status == 1 ? "Autoevaluacion Pendiente" : ""}</CardHeader>
+                                <CardHeader> {u.name} {u.middlename} {u.lastname} {selfInvitation?.status && selfInvitation.status == 0 ? "Autoevaluacion Pendiente" : ""}</CardHeader>
                                 {filter!="" ? 
                                 <>
                                     Selecciona un usuario:
