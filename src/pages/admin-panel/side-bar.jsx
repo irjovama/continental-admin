@@ -136,8 +136,8 @@ const SideBar = function ({  setParams, params }) {
     const worksheet2 = XLSX.utils.json_to_sheet(userTests.length > 0 ? userTests.filter(uts=> uts.leaders_id != 0).map(ut=> {
       const user = users.find( u => {
         return u.id == ut.users_id
-      });
-      
+      }) || { name: "", middlename: "", lastname: "", email: ""};
+      console.log(user, ut.users_id);
       const leader = users.find(u => u.id == ut.leaders_id);
       if(!leader) {console.log(ut.leaders_id, user)};
         return {
