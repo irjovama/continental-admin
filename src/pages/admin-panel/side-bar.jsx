@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import { show } from "../../fetch";
+import { getSpecial, show } from "../../fetch";
 import colors from "../../styles/colors";
 import { useNavigate, useParams } from "react-router";
 import * as XLSX from 'xlsx';
@@ -63,6 +63,7 @@ const SideBar = function ({  setParams, params }) {
 
   const navigate = useNavigate();
   const [tests, setTests] = useState([]);
+  const [special, setSpecial] = useState([]);
   const [userTypes, setUserTypes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
@@ -86,6 +87,9 @@ const SideBar = function ({  setParams, params }) {
       limit: 10000000,
       filterBy: `tests_id=${urlParams.tests_id}`,
     };
+    t = await getSpecial();
+    setSpecial(t);
+
     t = await show("tests", {
       limit: 10000000,
       filterBy: `id=${urlParams.tests_id}`,
@@ -137,7 +141,6 @@ const SideBar = function ({  setParams, params }) {
       const user = users.find( u => {
         return u.id == ut.users_id
       }) || { name: "", middlename: "", lastname: "", email: ""};
-      console.log(user, ut.users_id);
       const leader = users.find(u => u.id == ut.leaders_id);
       if(!leader) {console.log(ut.leaders_id, user)};
         return {
@@ -152,7 +155,6 @@ const SideBar = function ({  setParams, params }) {
     XLSX.utils.book_append_sheet(workbook, worksheet2, 'Invitaciones');
     
     // Hoja de cálculo 3
-    console.log("userQuestions", userQuestions);
     const worksheet3 = XLSX.utils.json_to_sheet(userQuestions.map(uq=> {
       const userType = userTypes.find(c => c.id === uq.users_type);
       const subCategory = subCategories.find(c => c.id === uq.sub_categories_id);
@@ -173,6 +175,13 @@ const SideBar = function ({  setParams, params }) {
       }
     }));
     XLSX.utils.book_append_sheet(workbook, worksheet3, 'Respuestas');
+
+
+    // Hoja de cálculo 4
+    console.log(special)
+    const worksheet4 = XLSX.utils.json_to_sheet(special);
+    XLSX.utils.book_append_sheet(workbook, worksheet4, 'Resumen');
+
 
     const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
     saveAsExcelFile(excelBuffer, 'Reporte.xlsx');

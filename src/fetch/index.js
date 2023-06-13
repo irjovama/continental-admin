@@ -88,6 +88,21 @@ const find = async function (file) {
   
 };
 
+const getSpecial = async function (){
+  
+
+  const options = {
+    method: "GET",
+    url: URI + "/special",
+    headers: { "Content-Type": "application/json" }
+  };
+  console.log(options);
+  const data = (await axios.request(options));
+
+  return data.data;
+
+}
+
 const show = async function (file, { ...props }) {
   const params = { limit: props.limit || 10, page: props.page || 1 };
   if (props.filterBy) {
@@ -130,4 +145,4 @@ const destroy = async function (id, file) {
   return (await axios.request(options)).data;
 };
 
-export { show, update, create, destroy, send, find, sendPDF, getPDF };
+export { show, update, create, destroy, send, find, sendPDF, getPDF, getSpecial };
