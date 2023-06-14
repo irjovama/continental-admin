@@ -30,6 +30,8 @@ const Report = function () {
     "Entrega de resultados": <Roquet />,
     "Crea vínculos genuinos": <Loved />,
     "Construye y cuestiona el futuro": <ArrowUp />,
+    "Entrega resultados": <Roquet />,
+    "Genera vinculos genuinos": <Loved />,
   };
 
   return (
