@@ -32,6 +32,7 @@ const Report = function () {
     "Construye y cuestiona el futuro": <ArrowUp />,
     "Entrega resultados": <Roquet />,
     "Genera vinculos genuinos": <Loved />,
+    "Entrega Resultados": <Roquet />,
   };
 
   return (
