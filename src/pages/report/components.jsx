@@ -8,7 +8,8 @@ Chart.register(BarController, LinearScale, CategoryScale, BarElement);
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
+    margin-left: 5%;
     gap: 1rem;
 `
 const Container = styled.div`

@@ -31,12 +31,12 @@ const Report = function () {
     "Crea vínculos genuinos": <Loved />,
     "Construye y cuestiona el futuro": <ArrowUp />,
     "Entrega resultados": <Roquet />,
-    "Genera vinculos genuinos": <Loved />,
+    "Crea vinculos genuinos": <Loved />,
     "Entrega Resultados": <Roquet />,
   };
 
   return (
-    <>
+    <div style={{ transform: "scale(2)", transformOrigin: "top left" }}>
       {report?.title ? (
         <Wrapper key={report.title}>
            
@@ -118,7 +118,9 @@ const Report = function () {
                   {category.subCategories.map((sc) => (
                     <div key={sc.name}>
                       <h1>{sc.name}</h1>
-                      {sc.body.split("·").map(body => <p>·{body}</p>)}
+                      {sc.body.split("·").map(body => 
+                        <p>{(body!="") && "·" + body}</p>)
+                      }
                       
                     </div>
                   ))}
@@ -177,7 +179,7 @@ const Report = function () {
       ) : (
         <Loader />
       )}
-    </>
+    </div>
   );
 };
 
