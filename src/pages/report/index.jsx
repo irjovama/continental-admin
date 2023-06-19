@@ -118,7 +118,8 @@ const Report = function () {
                   {category.subCategories.map((sc) => (
                     <div key={sc.name}>
                       <h1>{sc.name}</h1>
-                      <p>{sc.body}</p>
+                      {sc.body.split("·").map(body => <p>·{body}</p>)}
+                      
                     </div>
                   ))}
                 </P2Info>
@@ -151,7 +152,7 @@ const Report = function () {
                   </P3Card>
                   <P3Info>
                     <h1>¿Qué significa haber llegado a este nivel?</h1>
-                    <p>{resume.recomendations}</p>
+                    {resume.recomendations.split("·").map(reco => <p>·{reco}</p>)}
                   </P3Info>
                   <WrapperGraph>
                     <h1>Puntaje por dimensión</h1>
@@ -166,7 +167,7 @@ const Report = function () {
                   </WrapperGraph>
                   <P3Field>
                     <h1>Recomendaciones</h1>
-                    {resume.recomendations}
+                    {resume.recomendations.split("·").map(reco => <p>·{reco}</p>)}
                   </P3Field>
                 </P3Wrapper>
               </Section>
