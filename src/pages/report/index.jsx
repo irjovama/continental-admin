@@ -36,7 +36,7 @@ const Report = function () {
   };
 
   return (
-    <div style={{ transform: "scale(2)", transformOrigin: "top left" }}>
+    <div style={{ transform: "scale(1)", transformOrigin: "top left" }}>
       {report?.title ? (
         <Wrapper key={report.title}>
            
