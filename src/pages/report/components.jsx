@@ -122,6 +122,10 @@ const WrapperGraph = styled.div`
     display: flex;
     flex-direction: column;
     margin: 1rem;
+    &  > p{
+        font-size: 10px;
+        margin: 5px;
+    }
     & > h1 {
         font-family: 'Neue Plak';
         font-style: normal;
@@ -238,6 +242,9 @@ const P2Info = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin-left: 1rem;
+    & > p{
+        font-size: 12px;
+    }
     & > div > h1 {
         font-family: 'Neue Plak';
         font-style: normal;

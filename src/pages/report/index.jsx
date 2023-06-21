@@ -27,14 +27,11 @@ const Report = function () {
   }, []);
 
   const icons = {
-    "Entrega de resultados": <Roquet />,
     "Crea vínculos genuinos": <Loved />,
     "Construye y cuestiona el futuro": <ArrowUp />,
     "Entrega resultados": <Roquet />,
-    "Crea vinculos genuinos": <Loved />,
-    "Entrega Resultados": <Roquet />,
   };
-
+  
   return (
     <div style={{ transform: "scale(1)", transformOrigin: "top left" }}>
       {report?.title ? (
@@ -75,9 +72,17 @@ const Report = function () {
             </Section>
             <Section>
               <WrapperGraph>
+                <h1>¿Qué significa haber llegado a este puntaje?</h1>
+                <p>{report.pages.page1.result[0]}</p>
+                <h1>Agunas recomendaciones</h1>
+                {report.pages.page1.result[1].split(/\d\.\s/).filter(s => s!="").map((s, i)=><p key={s}>{i+1}. {s}</p>)}
+              </WrapperGraph>
+            </Section>
+            <Section>
+              <WrapperGraph>
                 <h1>Puntaje por dimensión</h1>
                 <div>
-                  <img src={report.pages.page1.graph1.chart} alt="Gráfico" height={"250px"} />
+                  <img src={report.pages.page1.graph1.chart} alt="Gráfico"/>
                 </div>
               </WrapperGraph>
             </Section>
@@ -87,7 +92,7 @@ const Report = function () {
                 <fieldset>
                   {report.pages.page1.vsGraphs.map((g) => (
                     <div key={g.chart}>
-                      <img src={g.chart} alt="Gráfico"  height={"200px"}/>
+                      <img src={g.chart} alt="Gráfico"/>
                     </div>
                   ))}
                 </fieldset>
@@ -115,12 +120,12 @@ const Report = function () {
                   <span>{category.name}</span>
                 </P2Card>
                 <P2Info>
+                  <p>{category.body}</p>
                   {category.subCategories.map((sc) => (
                     <div key={sc.name}>
                       <h1>{sc.name}</h1>
-                      {sc.body.split("·").map(body => 
-                        <p>{(body!="") && "·" + body}</p>)
-                      }
+                      <p>{sc.body}</p>
+                 
                       
                     </div>
                   ))}
@@ -153,8 +158,8 @@ const Report = function () {
                     </div>
                   </P3Card>
                   <P3Info>
-                    <h1>¿Qué significa haber llegado a este nivel?</h1>
-                    {resume.recomendations.split("·").map(reco => <p>·{reco}</p>)}
+                    <h1>¿Qué significa haber llegado a este puntaje?</h1>
+                    <p>{resume.comments}</p>
                   </P3Info>
                   <WrapperGraph>
                     <h1>Puntaje por dimensión</h1>
@@ -169,7 +174,7 @@ const Report = function () {
                   </WrapperGraph>
                   <P3Field>
                     <h1>Recomendaciones</h1>
-                    {resume.recomendations.split("·").map(reco => <p>·{reco}</p>)}
+                    {resume.recomendations.split("·").map(reco => reco!="" && <p>·{reco}</p>)}
                   </P3Field>
                 </P3Wrapper>
               </Section>
