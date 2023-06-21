@@ -1,8 +1,8 @@
 import axios from "axios";
 import * as dotenv from 'dotenv';
 
-const URI = "http://localhost:3000";
-// const URI = "https://thawing-oasis-42405.herokuapp.com";
+// const URI = "http://localhost:3000";
+const URI = "https://thawing-oasis-42405.herokuapp.com";
 const localHost = "https://continental-front.netlify.app" ;
 const baseURI = URI + "/db";
 const baseSendURI = URI + "/mail";
