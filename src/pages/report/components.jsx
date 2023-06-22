@@ -44,7 +44,7 @@ const LeaderCard = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 400;
-        font-size: 15px;
+        font-size: 12px;
         line-height: 22px;
         color: #6802B5;
         width: 180px;
@@ -54,7 +54,7 @@ const LeaderCard = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 400;
-        font-size: 9px;
+        font-size: 12px;
         line-height: 13px;
 
         color: #1C1C1A;
@@ -260,7 +260,7 @@ const P2Info = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 400;
-        font-size: 9px;
+        font-size: 12px;
         line-height: 13px;
 
         color: #1C1C1A;
@@ -278,7 +278,7 @@ const P3Card = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 12px;
         line-height: 24px;
         /* identical to box height */
 
@@ -298,7 +298,7 @@ const P3Card = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 800;
-        font-size: 22px;
+        font-size: 12px;
         line-height: 20px;
         text-align: center;
         color: #7A00C6;
@@ -331,7 +331,7 @@ const P3Info = styled.div`
         font-family: 'Neue Plak';
         font-style: normal;
         font-weight: 400;
-        font-size: 9px;
+        font-size: 12px;
         line-height: 13px;
 
         color: #1C1C1A;
@@ -346,7 +346,7 @@ const P3Field = styled.div`
     font-family: 'Neue Plak';
     font-style: normal;
     font-weight: 400;
-    font-size: 9px;
+    font-size: 12px;
     line-height: 13px;
 
     color: #1C1C1A;
