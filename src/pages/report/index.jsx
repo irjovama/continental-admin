@@ -12,8 +12,8 @@ const Report = function () {
 
   const generatePDF = (e) => {
    
-    const element = document.getElementById('root');
-    html2pdf().set({ html2canvas: { scale: 2 } }).from(element).save();
+    const element = document.getElementById('myPdf');
+    html2pdf().set({ html2canvas: { scale: 3 } }).from(element).save();
    
   };
 
@@ -33,11 +33,11 @@ const Report = function () {
   };
   
   return (
-    <div style={{ transform: "scale(1)", transformOrigin: "top left" }}>
+    <div >
       {report?.title ? (
-        <Wrapper key={report.title}>
+        <Wrapper key={report.title} id="myPdf" >
            
-          <Container>
+          <Container >
             <Header>
               <span onClick={generatePDF}>
                 Reporte de encuesta de {report.title}

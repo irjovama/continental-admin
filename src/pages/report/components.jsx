@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+    max-height: 4400px;
     gap: 1rem;
 `
 const Container = styled.div`
@@ -279,7 +279,7 @@ const P3Card = styled.div`
     flex-direction: row;
     align-items: center;
     width: 100%;
-    margin: 0 2rem;
+    margin: 0 1rem;
     justify-content: space-between;
     & > h1{
         font-family: 'Neue Plak';
