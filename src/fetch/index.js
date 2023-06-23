@@ -1,18 +1,18 @@
 import axios from "axios";
 import * as dotenv from 'dotenv';
 
-const URI = "http://localhost:3000";
-// const URI = "https://thawing-oasis-42405.herokuapp.com";
-const localHost = "https://continental-front.netlify.app" ;
+// const URI = "http://localhost:3000";
+const URI = "https://thawing-oasis-42405.herokuapp.com";
+const localHost = "https://continental-front.netlify.app";
 const baseURI = URI + "/db";
 const baseSendURI = URI + "/mail";
 const basePDFURI = URI + "/pdf";
 const invitationURI = localHost + "/invitations";
 
-const getPDF = async function(test_id, user_id){
+const getPDF = async function (test_id, user_id) {
   const options = {
     method: 'GET',
-    url: basePDFURI + '/tests/' + test_id + '/users/' + user_id 
+    url: basePDFURI + '/tests/' + test_id + '/users/' + user_id
   };
   console.log(options);
   try {
@@ -22,10 +22,10 @@ const getPDF = async function(test_id, user_id){
     return err;
   }
 }
-const sendPDF = async function (test_id, u){
+const sendPDF = async function (test_id, u) {
   const options = {
     method: 'GET',
-    url: basePDFURI + '/tests/' + test_id + '/users/' + u.id 
+    url: basePDFURI + '/tests/' + test_id + '/users/' + u.id
   };
   try {
     return (await axios.request(options)).data;
@@ -43,7 +43,7 @@ const send = async function (user, test_title, object) {
 Como parte de nuestro modelo de Cultura y Liderazgo, hemos desarrollado esta evaluación de liderazgo con el objetivo de impulsar mejoras a nivel personal y en el funcionamiento de los equipos, y así poder seguir creciendo como organización.\n
 La Evaluación de Liderazgo que efectuarás a continuación se basa en las dimensiones de nuestro Modelo de Liderazgo UC:  Entrega resultados, crea vínculos genunios y Cuestiona y construye el futuro.\n
 Para contestar la encuesta haz click en cada uno de los enlaces:\n\n
-${object.map(o=> `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}\n\n
+${object.map(o => `Evaluación para ${o.leader} ${invitationURI}/${o.token}`).join("\n\n")}\n\n
 IMPORTANTE\n
 Por favor completa la evaluación hasta el 8 de junio. \n
 Si tienes alguna duda o consulta, puedes escribirnos a Bienestarytalento@continental.edu.pe
@@ -86,11 +86,11 @@ const find = async function (file) {
     console.error(error)
     return error;
   }
-  
+
 };
 
-const getSpecial = async function (){
-  
+const getSpecial = async function () {
+
 
   const options = {
     method: "GET",
