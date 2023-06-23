@@ -355,9 +355,10 @@ const P3Field = styled.div`
     font-weight: 400;
     font-size: 12px;
     line-height: 13px;
-
+    gap: 1rem;
     color: #1C1C1A;
-
+    display: flex;
+    flex-direction: column;
     & > h1{
         font-family: 'Neue Plak';
         font-style: normal;
