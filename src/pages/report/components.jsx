@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-height: 4400px;
+    max-height: 5500px;
     gap: 1rem;
 `
 const Container = styled.div`
