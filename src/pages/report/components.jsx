@@ -78,7 +78,7 @@ const HeaderCard = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    gap: 0.5rem;
    
     & > h1 {
         width: 75px;
@@ -242,8 +242,15 @@ const P2Info = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin-left: 1rem;
+    font-size: 12px;
     & > p{
+        font-family: 'Neue Plak';
+        font-style: normal;
+        font-weight: 400;
         font-size: 12px;
+        line-height: 13px;
+
+        color: #1C1C1A;
     }
     & > div > h1 {
         font-family: 'Neue Plak';

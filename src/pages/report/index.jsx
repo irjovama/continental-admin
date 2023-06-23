@@ -174,7 +174,14 @@ const Report = function () {
                   </WrapperGraph>
                   <P3Field>
                     <h1>Recomendaciones</h1>
-                    {resume.recomendations.split("·").map(reco => reco!="" && <p>·{reco}</p>)}
+                    {resume.recomendations.map(reco => {
+                      return(
+                        <>
+                          <h1>{reco.subCategory}</h1>
+                          {reco.data.map(data => data.split('·').map(data2=> data2!="" && <p>·{data2}</p>))}
+                        </>
+                      )
+                    })}
                   </P3Field>
                 </P3Wrapper>
               </Section>
