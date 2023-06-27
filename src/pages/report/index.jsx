@@ -74,7 +74,7 @@ const Report = function () {
               <WrapperGraph>
                 <h1>¿Qué significa haber llegado a este puntaje?</h1>
                 <p>{report.pages.page1.result[0]}</p>
-                <h1>Agunas recomendaciones</h1>
+                <h1>Algunas recomendaciones</h1>
                 {report.pages.page1.result[1].split(/\d\.\s/).filter(s => s!="").map((s, i)=><p key={s}>{i+1}. {s}</p>)}
               </WrapperGraph>
             </Section>
